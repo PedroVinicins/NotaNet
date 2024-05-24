@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'poppins', sans-serif;
+}
+
+body {
+  padding: 10px;
+}
+
+header{
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  z-index: 100;
+}
+
+.container {
+  display: flex; 
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.addNote-content {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.addNote-content:hover {
+  background-color: #0056b3;
+}
+
+.icon-plus {
+  padding: 0 14px;
+  width: fit-content;
+  font-size: xx-large;
+}
+
+.content {
+  display: contents;
+  display: flex;
+  flex-direction: row;
+}
+
+textarea {
+  padding: 5px;
+  padding-top: 14px;
+  outline: none;
+  resize: none;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  width: 200px;
+  height: 150px;
+}
+
+textarea::-webkit-scrollbar {
+  width: 4px;
+}
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #4B4453; 
+}
+
+
+.item {
+  position: relative;
+  width: 200px;
+  height: 150px;  
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.remove {
+  position: absolute;
+    right: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ff0000;
+}
