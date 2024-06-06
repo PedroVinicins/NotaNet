@@ -1,4 +1,6 @@
-## Um Projetinho Quadardo em meus arquivos
+## NotaNet Suas notas em um so logar
 
 # descriçao
-- site de notas online 
+-Site de notas online 
+-Suas notas em um só lugar
+-Facil de usar
