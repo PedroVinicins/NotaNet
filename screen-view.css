@@ -1,0 +1,56 @@
+@media screen and (max-width: 600px) {
+    header{
+        display: flex;
+        margin: 0pc;
+        width: 1pc;
+    }
+
+   html, body{
+        margin: 0;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .addNote-content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 5pc;
+            height: 5pc;
+            background-color: #2b2b2b;
+            color: white;
+            border-radius: 35%;
+            font-size: 24px; /* Tamanho do ícone */
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para dar destaque */
+            transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+            position: fixed;
+            bottom: 20px; /* Distância da parte inferior da tela */
+            right: 20px; /* Distância do lado direito da tela */
+            z-index: 1000;
+    }
+    .addNote-content{
+        background-color: #131313;
+      }
+}
+
+@media screen and (max-width: 600px) {
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1px; /* Espaçamento entre os itens */
+      }
+
+      .item {
+        position: relative;
+        width: 394px;
+        height: 150px;  
+        margin: 10px;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+      }
+      .item:hover{
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+}
+

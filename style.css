@@ -28,13 +28,22 @@ header{
 }
 
 .addNote-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5pc;
+  height: 5pc;
   background-color: #007BFF;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 20%;
+  font-size: 24px; /* Tamanho do ícone */
   cursor: pointer;
-  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
 }
 
 .addNote-content:hover {
@@ -48,9 +57,9 @@ header{
 }
 
 .content {
-  display: contents;
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px; /* Espaçamento entre os itens */
 }
 
 textarea {
@@ -84,7 +93,7 @@ textarea::-webkit-scrollbar-thumb {
 
 .remove {
   position: absolute;
-    right: 6px;
+    right: 8px;
     cursor: pointer;
     font-weight: bold;
     color: #ff0000;
