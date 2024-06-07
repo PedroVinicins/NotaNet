@@ -2,6 +2,7 @@
 
 ## Descrição
 O NotaNet é uma aplicação web simples para registro e organização de notas.
+https://notanet.netlify.app/
 
 ## Funcionalidades
 - Adicionar e visualizar notas.
