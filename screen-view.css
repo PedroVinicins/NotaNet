@@ -52,5 +52,17 @@
       .item:hover{
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
+
+      textarea {
+        padding: 5px;
+        padding-top: 14px;
+        outline: none;
+        resize: none;
+        border: none;
+        background: transparent;
+        font-size: 20px;
+        width: 370px;
+        height: 150px;
+      }
 }
 
