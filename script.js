@@ -1,73 +1,144 @@
- const content = document.querySelector(".content");
- const btnNew = document.querySelector(".addNote-content");
+const content = document.querySelector(".content");
+const btnNew = document.querySelector(".addNote-content");
+const noteAf = document.querySelector(".noteAf");
+const noteAl = document.querySelector(".noteAl");
 
- let items_db = localStorage.getItem("items_db")
-   ? JSON.parse(localStorage.getItem("items_db"))
-   : [];
+let items_db = localStorage.getItem("items_db")
+  ? JSON.parse(localStorage.getItem("items_db"))
+  : [];
 
- const colors = ["#FFC75F"];
- const randomColor = () => colors[Math.floor(Math.random() * colors.length)];
+const colors = {
+  default: "coral",
+  noteAf: "#10B18B",
+  noteAl: "#DC1E00",
+};
+const randomColor = () => colors.default;
 
- function loadItems() {
-   content.innerHTML = "";
-   verifyNulls();
+function loadItems() {
+  content.innerHTML = "";
+  verifyNulls();
 
-   items_db.forEach((item, i) => {
-     addHTML(item, i);
-   });
+  items_db.forEach((item, i) => {
+    if (item.type === "Alert") {
+      addAlertHTML(item, i);
+    } else {
+      addHTML(item, i);
+    }
+  });
 
-   addEvents();
- }
+  addEvents();
+}
 
- btnNew.onclick = () => {
-   addHTML();
+btnNew.onclick = () => {
+  addNewItem();
+};
 
-   addEvents();
- };
+noteAf.onclick = () => {
+  addNewAlert(colors.noteAf);
+};
 
- function addHTML(item) {
-   const div = document.createElement("div");
+noteAl.onclick = () => {
+  addNewAlert(colors.noteAl);
+};
 
-   div.innerHTML = `<div class="item" style="background-color: ${
-     item?.color || randomColor()
-   }">
-     <span class="remove">⌧</span>
-     <textarea>${item?.text || ""}</textarea>
-   </div>`;
+function addNewItem(color = randomColor()) {
+  const newItem = {
+    text: "➤  ",
+    color: color,
+    type: "Note"
+  };
+  items_db.push(newItem);
+  localStorage.setItem("items_db", JSON.stringify(items_db));
+  loadItems();
+}
 
-   content.appendChild(div);
- }
+function addNewAlert(color) {
+  const newItem = {
+    text: "➤  ",
+    color: color,
+    type: "Alert"
+  };
+  items_db.unshift(newItem);
+  localStorage.setItem("items_db", JSON.stringify(items_db));
+  loadItems();
+}
 
- function addEvents() {
-   const notes = document.querySelectorAll(".item textarea");
-   const remove = document.querySelectorAll(".item .remove");
+function addHTML(item, i) {
+  const div = document.createElement("div");
 
-   notes.forEach((item, i) => {
-     item.oninput = () => {
-       items_db[i] = {
-         text: item.value,
-         color: items_db[i]?.color || item.parentElement.style.backgroundColor,
-       };
+  div.innerHTML = `<div class="item" style="background-color: ${
+    item.color
+  }">
+    <span class="remove">✘</span>
+    <textarea>${item.text}</textarea>
+  </div>`;
 
-       localStorage.setItem("items_db", JSON.stringify(items_db));
-     };
-   });
+  content.appendChild(div);
+}
 
-   remove.forEach((item, i) => {
-     item.onclick = () => {
-       content.children[i].remove();
-       if (items_db[i]) {
-         items_db.splice(i, 1);
-         localStorage.setItem("items_db", JSON.stringify(items_db));
-       }
-       addEvents();
-     };
-   });
- }
+function addAlertHTML(item, i) {
+  const div = document.createElement("div");
 
- function verifyNulls() {
-   items_db = items_db.filter((item) => item);
-   localStorage.setItem("items_db", JSON.stringify(items_db));
- }
+  div.innerHTML = `<div class="Alert" style="background-color: ${
+    item.color
+  }">
+    <span class="remove-1">✘</span>
+    <textarea class="Alertsy">${item.text}</textarea>
+  </div>`;
 
- loadItems();
+  content.appendChild(div);
+}
+
+function addEvents() {
+  const notes = document.querySelectorAll(".item textarea");
+  const alerts = document.querySelectorAll(".Alert textarea");
+  const removeNotes = document.querySelectorAll(".item .remove");
+  const removeAlerts = document.querySelectorAll(".Alert .remove-1");
+
+  notes.forEach((item, i) => {
+    item.oninput = () => {
+      items_db[i] = {
+        text: item.value,
+        color: items_db[i].color,
+        type: "Note"
+      };
+
+      localStorage.setItem("items_db", JSON.stringify(items_db));
+    };
+  });
+
+  alerts.forEach((item, i) => {
+    item.oninput = () => {
+      items_db[i] = {
+        text: item.value,
+        color: items_db[i].color,
+        type: "Alert"
+      };
+
+      localStorage.setItem("items_db", JSON.stringify(items_db));
+    };
+  });
+
+  removeNotes.forEach((item, i) => {
+    item.onclick = () => {
+      items_db.splice(i, 1);
+      localStorage.setItem("items_db", JSON.stringify(items_db));
+      loadItems();
+    };
+  });
+
+  removeAlerts.forEach((item, i) => {
+    item.onclick = () => {
+      items_db.splice(i, 1);
+      localStorage.setItem("items_db", JSON.stringify(items_db));
+      loadItems();
+    };
+  });
+}
+
+function verifyNulls() {
+  items_db = items_db.filter((item) => item !== null && item !== undefined);
+  localStorage.setItem("items_db", JSON.stringify(items_db));
+}
+
+loadItems();

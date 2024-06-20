@@ -2,12 +2,27 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
   <link rel="stylesheet" media="(max-width: 600px)" href="screen-view.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NotaNet</title>
 </head>
 <body>
-  <header><h1>Suas Anotaçoes</h1></header>
+  <header class="header">
+    <h1 class="logo">Nota<span>Net.</span></h1>
+  
+    <ul>
+      <li><a href="#">💬 <i class="fas fa-caret-down"></i></a>
+          <div class="menu">
+              <ul>
+                <li class="noteAl"><a href="#">🟥</a></li>
+                <li class="noteAf"><a href="#">✅</a></li>
+              </ul>
+            </div>
+      </li>
+    </ul>
+  </header>
 
         <div class="addNote-content">
           <div class="icon-plus">╋</div>

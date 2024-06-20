@@ -9,17 +9,6 @@ body {
   padding: 10px;
 }
 
-header{
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 20px 100px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  z-index: 100;
-}
 
 .container {
   display: flex; 
@@ -33,7 +22,7 @@ header{
   align-items: center;
   width: 5pc;
   height: 5pc;
-  background-color: #007BFF;
+  background-color: #445a71;
   color: white;
   border-radius: 20%;
   font-size: 24px; /* Tamanho do ícone */
@@ -47,7 +36,7 @@ header{
 }
 
 .addNote-content:hover {
-  background-color: #0056b3;
+  background-color: coral;
 }
 
 .icon-plus {
@@ -96,5 +85,42 @@ textarea::-webkit-scrollbar-thumb {
     right: 8px;
     cursor: pointer;
     font-weight: bold;
-    color: #ff0000;
+    color: #ffffff;
+}
+
+.Alert {
+  position: relative;
+  width: 200px;
+  height: 150px;  
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.remove-1 {
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.Alertsy{
+  padding: 5px;
+  padding-top: 14px;
+  outline: none;
+  resize: none;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  width: 200px;
+  height: 150px;
+  color: white;
+}
+
+.Alertsy::-webkit-scrollbar {
+  width: 4px;
+}
+.Alertsy::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #4B4453; 
 }
