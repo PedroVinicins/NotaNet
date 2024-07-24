@@ -69,7 +69,7 @@ function addHTML(item, i) {
   div.innerHTML = `<div class="item" style="background-color: ${
     item.color
   }">
-    <span class="remove">✘</span>
+    <span class="remove"><i class='bx bx-brush-alt bx-tada'></i></span>
     <textarea>${item.text}</textarea>
   </div>`;
 

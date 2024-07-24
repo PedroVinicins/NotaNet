@@ -1,96 +1,68 @@
 @media screen and (max-width: 600px) {
-    header{
-        display: flex;
-        margin: 0pc;
-        width: 1pc;
-    }
-
-   html, body{
-        margin: 0;
-    }
-}
-
-@media screen and (max-width:600px) {
-    .addNote-content{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 5pc;
-            height: 5pc;
-            background-color: #2b2b2b;
-            color: white;
-            border-radius: 12px;
-            font-size: 24px; /* Tamanho do ícone */
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(56, 56, 56, 0.1); /* Sombra para dar destaque */
-            transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
-            position: fixed;
-            bottom: 20px; /* Distância da parte inferior da tela */
-            right: 30px; /* Distância do lado direito da tela */
-            z-index: 1000;
-    }
-    .addNote-content{
-        background-color: #131313;
-      }
-}
-
-@media screen and (max-width: 600px) {
-    .content {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1px; /* Espaçamento entre os itens */
-      }
-
-  .item{
-        position: relative;
-        width: 394px;
-        height: 150px;  
-        margin: 10px;
-        border-radius: 10px;
-        transition: background-color 0.3s ease;
-      }
-      .item:hover{
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      }
-
-      textarea {
-        padding: 5px;
-        padding-top: 14px;
-        outline: none;
-        resize: none;
-        border: none;
-        background: transparent;
-        font-size: 20px;
-        width: 370px;
-        height: 150px;
-      }
-}
-
-@media screen and (max-width: 600px) {
-  
-  .Alert{
-    position: relative;
-    width: 394px;
-    height: 150px;  
-    margin: 10px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-  }
-  .Alert:hover{
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  header {
+      display: flex;
+      margin: 0;
+      width: 100%;
   }
 
-  .Alertsy {
-    padding: 5px;
-    padding-top: 14px;
-    outline: none;
-    resize: none;
-    border: none;
-    background: transparent;
-    font-size: 20px;
-    width: 370px;
-    height: 150px;
+  html, body {
+      margin: 0;
   }
 
-}
+  .addNote-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 5pc;
+      height: 5pc;
+      background-color: var(--note-background); /* Usando variável */
+      color: var(--note-text-color); /* Usando variável */
+      border-radius: 12px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(56, 56, 56, 0.1);
+      transition: background-color 0.3s ease;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 1000;
+  }
 
+  .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+  }
+
+  i {
+      font-size: xx-large;
+  }
+
+  .item, .Alert {
+      position: relative;
+      width: 150%;
+      height: 150px;
+      margin: 10px;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      background-color: var(--note-background); /* Usando variável */
+      color: var(--note-text-color); /* Usando variável */
+  }
+
+  .item:hover, .Alert:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  textarea, .Alertsy {
+      padding: 5px;
+      padding-top: 14px;
+      outline: none;
+      resize: none;
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      width: 100%;
+      height: 150px;
+      color: var(--text-color); /* Usando variável */
+  }
+}
