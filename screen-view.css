@@ -15,8 +15,6 @@
       align-items: center;
       width: 5pc;
       height: 5pc;
-      background-color: var(--note-background); /* Usando variável */
-      color: var(--note-text-color); /* Usando variável */
       border-radius: 12px;
       font-size: 24px;
       cursor: pointer;
@@ -40,7 +38,7 @@
 
   .item, .Alert {
       position: relative;
-      width: 150%;
+      width: 135%;
       height: 150px;
       margin: 10px;
       border-radius: 10px;
