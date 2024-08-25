@@ -1,0 +1,45 @@
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/public/css/header.css">
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="stylesheet" media="(max-width: 600px)" href="/public/css/screen-view.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotaNet</title>
+</head>
+<body>
+  <header class="header">
+    <h1>Nota<span>Net.</span></h1>
+    <ul>
+      <li class="noteAl"><a href="#" class="atext"><i class='bx bxs-note' style='color:#ff0000a4'></i></a></li>
+      <li class="noteAf"><a href="#" class="atext"><i class='bx bxs-note' style='color:#04ff00'></i></a></li>
+    </ul>
+    <button id="theme-toggle"><i class='bx bx-moon'></i></button>
+  </header>
+
+  <div class="addNote-content">
+    <div class="icon-plus"><i class='bx bxs-bookmark-plus'></i></div>
+  </div>
+
+  <div class="container"></div>
+  <div class="content"></div>
+
+  <script src="/public/js/script.js"></script>
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    if (localStorage.getItem('dark-theme') === 'true') {
+      body.classList.add('dark-theme');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-theme');
+      
+      // Salvar a preferência do usuário no localStorage
+      localStorage.setItem('dark-theme', body.classList.contains('dark-theme'));
+    });
+  </script>
+</body>
+</html>
