@@ -1,18 +1,20 @@
 const content = document.querySelector(".content");
 const btnNew = document.querySelector(".addNote-content");
-const noteAf = document.querySelector(".noteAf");
 const noteAl = document.querySelector(".noteAl");
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
 
-let items_db = localStorage.getItem("items_db")
-  ? JSON.parse(localStorage.getItem("items_db"))
-  : [];
-
+let items_db = JSON.parse(localStorage.getItem("items_db")) || [];
 const colors = {
   default: "coral",
-  noteAf: "#10B18B",
-  noteAl: "#DC1E00",
+  noteAl: "#222",
 };
-const randomColor = () => colors.default;
+
+// Função para gerar cores aleatórias (opcional)
+const randomColor = () => {
+  const availableColors = ["#222"];
+  return availableColors[Math.floor(Math.random() * availableColors.length)];
+};
 
 function loadItems() {
   content.innerHTML = "";
@@ -25,16 +27,10 @@ function loadItems() {
       addHTML(item, i);
     }
   });
-
-  addEvents();
 }
 
 btnNew.onclick = () => {
   addNewItem();
-};
-
-noteAf.onclick = () => {
-  addNewAlert(colors.noteAf);
 };
 
 noteAl.onclick = () => {
@@ -43,102 +39,109 @@ noteAl.onclick = () => {
 
 function addNewItem(color = randomColor()) {
   const newItem = {
-    text: "➤  ",
+    text: "",
     color: color,
-    type: "Note"
+    type: "Note",
   };
   items_db.push(newItem);
-  localStorage.setItem("items_db", JSON.stringify(items_db));
+  updateLocalStorage();
   loadItems();
 }
 
 function addNewAlert(color) {
   const newItem = {
-    text: "➤  ",
+    text: "",
     color: color,
-    type: "Alert"
+    type: "Alert",
   };
   items_db.unshift(newItem);
-  localStorage.setItem("items_db", JSON.stringify(items_db));
+  updateLocalStorage();
   loadItems();
 }
 
-function addHTML(item, i) {
-  const div = document.createElement("div");
+function updateLocalStorage() {
+  localStorage.setItem("items_db", JSON.stringify(items_db));
+}
 
-  div.innerHTML = `<div class="item" style="background-color: ${
-    item.color
-  }">
-    <span class="remove"><i class='bx bx-brush-alt bx-tada'></i></span>
-    <textarea>${item.text}</textarea>
-  </div>`;
+// Função para criar HTML para uma nota
+function addHTML(item, index) {
+  const div = document.createElement("div");
+  div.classList.add("item");
+  div.style.backgroundColor = item.color;
+  div.setAttribute("data-index", index);
+
+  div.innerHTML = `
+  <span class="remove"><i class='bx bx-brush-alt bx-tada' style='color:#ffff'></i></span>
+  <textarea placeholder="Sua Tarefa" class="noteAl">${item.text}</textarea>
+     `;
+  content.appendChild(div);
+}
+
+// Função para criar HTML para um alerta
+function addAlertHTML(item, index) {
+  const div = document.createElement("div");
+  div.classList.add("Alert");
+  div.style.backgroundColor = item.color;
+  div.setAttribute("data-index", index);
+
+  div.innerHTML = `
+    <span class="remove"><i class='bx bx-x'></i></span>
+    <textarea placeholder="Tarefa de alta prioridade" class="Alertsy">${item.text}</textarea>
+  `;
 
   content.appendChild(div);
 }
 
-function addAlertHTML(item, i) {
-  const div = document.createElement("div");
-
-  div.innerHTML = `<div class="Alert" style="background-color: ${
-    item.color
-  }">
-    <span class="remove-1">✘</span>
-    <textarea class="Alertsy">${item.text}</textarea>
-  </div>`;
-
-  content.appendChild(div);
-}
-
+// Função para adicionar eventos usando delegação de eventos
 function addEvents() {
-  const notes = document.querySelectorAll(".item textarea");
-  const alerts = document.querySelectorAll(".Alert textarea");
-  const removeNotes = document.querySelectorAll(".item .remove");
-  const removeAlerts = document.querySelectorAll(".Alert .remove-1");
-
-  notes.forEach((item, i) => {
-    item.oninput = () => {
-      items_db[i] = {
-        text: item.value,
-        color: items_db[i].color,
-        type: "Note"
-      };
-
-      localStorage.setItem("items_db", JSON.stringify(items_db));
-    };
+  // Evento para capturar cliques nos botões de remoção
+  content.addEventListener("click", (e) => {
+    if (e.target.closest(".remove")) {
+      const parent = e.target.closest("[data-index]");
+      const index = parseInt(parent.getAttribute("data-index"));
+      removeItem(index);
+    }
   });
 
-  alerts.forEach((item, i) => {
-    item.oninput = () => {
-      items_db[i] = {
-        text: item.value,
-        color: items_db[i].color,
-        type: "Alert"
-      };
-
-      localStorage.setItem("items_db", JSON.stringify(items_db));
-    };
+  // Evento para capturar alterações nos textareas
+  content.addEventListener("input", (e) => {
+    if (e.target.tagName.toLowerCase() === "textarea") {
+      const parent = e.target.closest("[data-index]");
+      const index = parseInt(parent.getAttribute("data-index"));
+      updateItemText(index, e.target.value);
+    }
   });
+}
 
-  removeNotes.forEach((item, i) => {
-    item.onclick = () => {
-      items_db.splice(i, 1);
-      localStorage.setItem("items_db", JSON.stringify(items_db));
-      loadItems();
-    };
-  });
+function removeItem(index) {
+  items_db.splice(index, 1);
+  updateLocalStorage();
+  loadItems();
+}
 
-  removeAlerts.forEach((item, i) => {
-    item.onclick = () => {
-      items_db.splice(i, 1);
-      localStorage.setItem("items_db", JSON.stringify(items_db));
-      loadItems();
-    };
-  });
+function updateItemText(index, newText) {
+  if (items_db[index]) {
+    items_db[index].text = newText;
+    updateLocalStorage();
+  }
 }
 
 function verifyNulls() {
   items_db = items_db.filter((item) => item !== null && item !== undefined);
-  localStorage.setItem("items_db", JSON.stringify(items_db));
+  updateLocalStorage();
 }
 
+// Verificação do tema dark
+if (localStorage.getItem('dark-theme') === 'true') {
+  body.classList.add('dark-theme');
+}
+
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('dark-theme');
+  
+  // Salvar a preferência do usuário no localStorage
+  localStorage.setItem('dark-theme', body.classList.contains('dark-theme'));
+});
+
+addEvents();
 loadItems();
