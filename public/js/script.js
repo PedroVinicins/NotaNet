@@ -42,6 +42,9 @@ function addNewItem(color = randomColor()) {
     text: "",
     color: color,
     type: "Note",
+    date: new Date().toLocaleDateString('pt-BR'),
+    level: 'media',
+    name: 'Nova Nota'
   };
   items_db.push(newItem);
   updateLocalStorage();
@@ -53,6 +56,9 @@ function addNewAlert(color) {
     text: "",
     color: color,
     type: "Alert",
+    date: new Date().toLocaleDateString('pt-BR'),
+    level: 'alta',
+    name: ' Importante'
   };
   items_db.unshift(newItem);
   updateLocalStorage();
@@ -63,7 +69,6 @@ function updateLocalStorage() {
   localStorage.setItem("items_db", JSON.stringify(items_db));
 }
 
-// Função para criar HTML para uma nota
 function addHTML(item, index) {
   const div = document.createElement("div");
   div.classList.add("item");
@@ -71,9 +76,12 @@ function addHTML(item, index) {
   div.setAttribute("data-index", index);
 
   div.innerHTML = `
-  <span class="remove"><i class='bx bx-brush-alt bx-tada' style='color:#ffff'></i></span>
-  <textarea placeholder="Sua Tarefa" class="noteAl">${item.text}</textarea>
-     `;
+    <span class="remove"><i class='bx bx-brush-alt bx-tada' style='color:#ffff'></i></span>
+    <h2 contenteditable="true" class="note-name">${item.name}</h2>
+    <p class="note-date">Data: ${item.date}</p>
+    <p class="note-level">Nível de Compromisso: ${item.level}</p>
+    <textarea placeholder="Sua Tarefa" class="noteAl">${item.text}</textarea>
+  `;
   content.appendChild(div);
 }
 
@@ -86,13 +94,15 @@ function addAlertHTML(item, index) {
 
   div.innerHTML = `
     <span class="remove"><i class='bx bx-x'></i></span>
-    <textarea placeholder="Tarefa de alta prioridade" class="Alertsy">${item.text}</textarea>
+    <h2 contenteditable="true" class="note-name">${item.name}</h2>
+    <p class="note-date">Data: ${item.date}</p>
+    <p class="note-level">Nível de Compromisso: ${item.level}</p>
+    <textarea placeholder="Tarefa de prioridade" class="Alertsy">${item.text}</textarea>
   `;
 
   content.appendChild(div);
 }
 
-// Função para adicionar eventos usando delegação de eventos
 function addEvents() {
   // Evento para capturar cliques nos botões de remoção
   content.addEventListener("click", (e) => {
@@ -105,10 +115,13 @@ function addEvents() {
 
   // Evento para capturar alterações nos textareas
   content.addEventListener("input", (e) => {
-    if (e.target.tagName.toLowerCase() === "textarea") {
-      const parent = e.target.closest("[data-index]");
-      const index = parseInt(parent.getAttribute("data-index"));
+    const parent = e.target.closest("[data-index]");
+    const index = parseInt(parent.getAttribute("data-index"));
+    
+    if (e.target.classList.contains("noteAl") || e.target.classList.contains("Alertsy")) {
       updateItemText(index, e.target.value);
+    } else if (e.target.classList.contains("note-name")) {
+      updateItemName(index, e.target.textContent);
     }
   });
 }
@@ -122,6 +135,13 @@ function removeItem(index) {
 function updateItemText(index, newText) {
   if (items_db[index]) {
     items_db[index].text = newText;
+    updateLocalStorage();
+  }
+}
+
+function updateItemName(index, newName) {
+  if (items_db[index]) {
+    items_db[index].name = newName;
     updateLocalStorage();
   }
 }

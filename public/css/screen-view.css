@@ -39,7 +39,7 @@
     .item, .Alert {
         position: relative;
         width: 135%;
-        height: 150px;
+        height: 250px;
         margin: 10px;
         border-radius: 10px;
         transition: background-color 0.3s ease;
