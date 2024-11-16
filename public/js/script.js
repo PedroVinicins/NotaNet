@@ -7,10 +7,9 @@ const body = document.body;
 let items_db = JSON.parse(localStorage.getItem("items_db")) || [];
 const colors = {
   default: "coral",
-  noteAl: "#222",
+  noteAl: "#222 ",
 };
 
-// Função para gerar cores aleatórias (opcional)
 const randomColor = () => {
   const availableColors = ["#222"];
   return availableColors[Math.floor(Math.random() * availableColors.length)];
@@ -78,14 +77,13 @@ function addHTML(item, index) {
   div.innerHTML = `
     <span class="remove"><i class='bx bx-brush-alt bx-tada' style='color:#ffff'></i></span>
     <h2 contenteditable="true" class="note-name">${item.name}</h2>
-    <p class="note-date">Data: ${item.date}</p>
-    <p class="note-level">Nível de Compromisso: ${item.level}</p>
-    <textarea placeholder="Sua Tarefa" class="noteAl">${item.text}</textarea>
+    <p class="note-date"> ${item.date}</p>
+    <textarea placeholder="Tarefa" class="noteAl">${item.text}</textarea>
   `;
   content.appendChild(div);
 }
 
-// Função para criar HTML para um alerta
+//  alerta
 function addAlertHTML(item, index) {
   const div = document.createElement("div");
   div.classList.add("Alert");
@@ -95,8 +93,7 @@ function addAlertHTML(item, index) {
   div.innerHTML = `
     <span class="remove"><i class='bx bx-x'></i></span>
     <h2 contenteditable="true" class="note-name">${item.name}</h2>
-    <p class="note-date">Data: ${item.date}</p>
-    <p class="note-level">Nível de Compromisso: ${item.level}</p>
+    <p class="note-date">${item.date}</p>
     <textarea placeholder="Tarefa de prioridade" class="Alertsy">${item.text}</textarea>
   `;
 
@@ -104,7 +101,6 @@ function addAlertHTML(item, index) {
 }
 
 function addEvents() {
-  // Evento para capturar cliques nos botões de remoção
   content.addEventListener("click", (e) => {
     if (e.target.closest(".remove")) {
       const parent = e.target.closest("[data-index]");
@@ -152,6 +148,7 @@ function verifyNulls() {
 }
 
 // Verificação do tema dark
+// Salvar a preferência do usuário no localStorage
 if (localStorage.getItem('dark-theme') === 'true') {
   body.classList.add('dark-theme');
 }
@@ -159,7 +156,6 @@ if (localStorage.getItem('dark-theme') === 'true') {
 themeToggle.addEventListener('click', () => {
   body.classList.toggle('dark-theme');
   
-  // Salvar a preferência do usuário no localStorage
   localStorage.setItem('dark-theme', body.classList.contains('dark-theme'));
 });
 

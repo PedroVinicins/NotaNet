@@ -6,10 +6,9 @@
 }
 
 :root {
-  --background-color: #ffffff;
+  --background-color: #0000002e;
   --text-color: #ffffff;
-  --header-background: #000000;
-  --note-background: #2b2b2b;
+  --header-background: #ffffff;
   --note-text-color: white;
   --button-background: coral;
   --button-hover-background: coral;
@@ -20,9 +19,8 @@
   --background-color: #111;
   --text-color: #ffffff;
   --header-background: #ffffffc2;
-  --note-background: #131313;
   --note-text-color: #ffffff;
-  --button-background: rgba(255, 145, 0, 0.76);
+  --button-background: rgba(132, 105, 7, 0.234);
   --button-hover-background: rgba(253, 117, 68, 0.781);
   --scrollbar-thumb-color: #4B4453;
 }
@@ -66,6 +64,12 @@ h2{
     border: none;
     outline: none;
     text-align: center;
+    color: #ffffffc2;
+}
+
+p{
+  text-align: center;
+  color: #656565;
 }
 
 span {
@@ -73,8 +77,12 @@ span {
 }
 
 i, a, li {
-  font-size: x-large;
+  font-size: 20px;
   color: var(--text-color);
+}
+
+.bxs-alarm-exclamation{
+  font-size: 30px;
 }
 
 button {
@@ -146,7 +154,8 @@ button {
 }
 
 textarea, .Alertsy {
-  padding: 10px;
+  padding: 20px;
+  margin-top: 5px;
   outline: none;
   resize: none;
   border: none;
@@ -156,7 +165,7 @@ textarea, .Alertsy {
   height: 70%;
   color: var(--text-color);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.377);
+  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.571);
   transition: all 0.3s ease;
 }
 
@@ -178,16 +187,17 @@ textarea::-webkit-scrollbar-thumb, .Alertsy::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb-color);
 }
 
+
 .item, .Alert {
   position: relative;
   width: 300px;
-  height: 250px;  
+  height: 260px;  
   margin: 10px;
-  border-radius: 10px;
-  background-color: var(--note-background);
-  color: var(--note-text-color);
   padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  color: white;
+  box-shadow: 0 4px 8px rgba(205, 74, 60, 0.1);
 }
 
 .remove, .remove-1 {
