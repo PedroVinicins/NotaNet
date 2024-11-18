@@ -1,29 +1,25 @@
 @media screen and (max-width: 600px) {
-    header {
-        display: flex;
+    * {
         margin: 0;
-        width: 100%;
-    }
-  
-    html, body {
-        margin: 0;
-    }
-  
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
     .addNote-content {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         font-size: 24px;
         cursor: pointer;
-        box-shadow: 0 4px 6px rgba(56, 56, 56, 0.1);
         transition: background-color 0.3s ease;
         position: fixed;
-        bottom: 20px;
-        right: 30px;
+        right: 55px;
         z-index: 1000;
+        box-shadow: 0 4px 6px rgba(56, 56, 56, 0.1);
     }
   
     .content {
@@ -33,7 +29,8 @@
     }
   
     i {
-        font-size: xx-large;
+        font-size: x-large;
+        color: white;
     }
   
     .item, .Alert {
@@ -63,4 +60,86 @@
         height: 150px;
         color: var(--text-color); /* Usando variável */
     }
+  }
+
+  @media screen and (max-width: 600px){
+    nav .sidebar{
+      background-color: red;
+    }
+
+    #sidebar{
+        display: none !important;
+    }
+
+    .addNote-content2{
+        display: none;
+    }
+
+
+section {
+    --col-orange: #d17842;
+    --col-dark: #111;
+    --col-darkGray: #52555a;
+    --col-gray: #aeaeae;  
+
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+    width: 340px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--col-dark);
+    border-radius: 30px;
+  }
+  .label {
+    padding: 8px 18px;
+    transition: all 200ms;
+    display: inline-block;
+  }
+  
+  .label input[type="radio"] {
+    display: none;
+  }
+  .label > svg {
+    transition: all 200ms;
+    fill: var(--col-gray);
+    width: 14px;
+  }
+  .label:hover:not(:has(input:checked)) > svg {
+    fill: #d17842;
+    opacity: 0.6;
+  }
+  .label::before {
+    content: "";
+    display: block;
+    width: 0%;
+    height: 2px;
+    border-radius: 5px;
+    position: relative;
+    left: 50%;
+    top: 20px;
+    background: var(--col-orange);
+    transition: all 200ms;
+  }
+  .label > svg {
+    transition: 300ms;
+    fill: var(--col-darkGray);
+    margin-top: 0;
+  }
+  .label:has(input:checked) > svg {
+    fill: var(--col-orange);
+    scale: 1.2;
+    margin-top: -5px;
+  }
+  
+  .label:has(input:checked)::before {
+    width: 100%;
+    left: 0;
+    top: 25px;
+  }
+  
+   
+
   }

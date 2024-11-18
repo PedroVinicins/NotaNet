@@ -1,7 +1,9 @@
 const content = document.querySelector(".content");
 const btnNew = document.querySelector(".addNote-content");
+const addNoteButton = document.querySelector('.addNote-content2');
 const noteAl = document.querySelector(".noteAl");
 const themeToggle = document.getElementById('theme-toggle');
+const themeToggle2 = document.getElementById('theme-toggle1');
 const body = document.body;
 
 let items_db = JSON.parse(localStorage.getItem("items_db")) || [];
@@ -27,6 +29,11 @@ function loadItems() {
     }
   });
 }
+
+// segundo btn 
+addNoteButton.addEventListener('click', () => {
+  addNewItem(); 
+});
 
 btnNew.onclick = () => {
   addNewItem();
@@ -83,7 +90,6 @@ function addHTML(item, index) {
   content.appendChild(div);
 }
 
-//  alerta
 function addAlertHTML(item, index) {
   const div = document.createElement("div");
   div.classList.add("Alert");
@@ -96,7 +102,6 @@ function addAlertHTML(item, index) {
     <p class="note-date">${item.date}</p>
     <textarea placeholder="Tarefa de prioridade" class="Alertsy">${item.text}</textarea>
   `;
-
   content.appendChild(div);
 }
 
@@ -109,7 +114,6 @@ function addEvents() {
     }
   });
 
-  // Evento para capturar alterações nos textareas
   content.addEventListener("input", (e) => {
     const parent = e.target.closest("[data-index]");
     const index = parseInt(parent.getAttribute("data-index"));
@@ -147,16 +151,27 @@ function verifyNulls() {
   updateLocalStorage();
 }
 
-// Verificação do tema dark
-// Salvar a preferência do usuário no localStorage
 if (localStorage.getItem('dark-theme') === 'true') {
   body.classList.add('dark-theme');
 }
 
+themeToggle2.addEventListener('click', () => {
+  body.classList.toggle('dark-theme');
+});
+
 themeToggle.addEventListener('click', () => {
   body.classList.toggle('dark-theme');
-  
   localStorage.setItem('dark-theme', body.classList.contains('dark-theme'));
+});
+
+document.getElementById('resetbtn').addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.removeItem("dark-theme");
+  body.classList.remove("dark-theme");
+  localStorage.removeItem("items_db");
+  items_db = []; 
+  content.innerHTML = "";
+  alert("Configurações foram redefinidas!");
 });
 
 addEvents();

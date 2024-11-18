@@ -6,106 +6,92 @@
 }
 
 :root {
-  --background-color: #0000002e;
-  --text-color: #ffffff;
-  --header-background: #ffffff;
-  --note-text-color: white;
-  --button-background: coral;
-  --button-hover-background: coral;
+  --background-color: #ffffff;
+  --header-background: #ffffffc2;
+  --text-color: #000000;
+  --text-bloco-color: #ffff;
+  --logo-txt-header-color: black;
+  --note-text-color: #ff0000;
+  --celec-bar-color: coral;
   --scrollbar-thumb-color: #4B4453;
 }
 
 .dark-theme {
   --background-color: #111;
-  --text-color: #ffffff;
   --header-background: #ffffffc2;
-  --note-text-color: #ffffff;
-  --button-background: rgba(132, 105, 7, 0.234);
-  --button-hover-background: rgba(253, 117, 68, 0.781);
+  --text-color: #ffffff;
+  --note-text-color: #ff0000;
+  --logo-txt-header-color: rgb(255, 255, 255);
+  --celec-bar-color: coral;
   --scrollbar-thumb-color: #4B4453;
 }
 
-/* Transições suaves */
-body, header, textarea, .Alert, .item {
+body,
+header,
+textarea,
+.Alert,
+.item {
   transition: background-color 0.3s, color 0.3s;
 }
 
-button, .addNote-content {
+button,
+.addNote-content {
   transition: background-color 0.3s, transform 0.3s;
 }
 
-button:hover, .addNote-content:hover {
+button:hover,
+.addNote-content:hover {
   transform: scale(1.1);
 }
 
-/* Estilização geral */
 body {
+  display: flex;
+  min-height: 100vh;
   padding: 10px;
   background-color: var(--background-color);
   color: var(--text-color);
 }
 
-header {
+main {
   width: 100%;
-  background-color: var(--header-background);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-radius: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+section{
+  display: none;
 }
 
 h1 {
-  color: var( --header-background);
+  color: var(--logo-txt-header-color);
   font-size: 2rem;
 }
 
-h2{
-    border: none;
-    outline: none;
-    text-align: center;
-    color: #ffffffc2;
+h2 {
+  border: none;
+  outline: none;
+  text-align: center;
+  color: #969696;
 }
 
-p{
+header, p {
   text-align: center;
   color: #656565;
 }
 
-span {
+header span {
   color: coral;
 }
 
-i, a, li {
-  font-size: 20px;
-  color: var(--text-color);
-}
-
-.bxs-alarm-exclamation{
+.bxs-alarm-exclamation {
   font-size: 30px;
-}
-
-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  background-color: var(--button-background);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  z-index: 1000;
 }
 
 .bx-moon {
   font-size: 24px;
 }
 
-/* Layout da página */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -120,24 +106,19 @@ button {
 
 .addNote-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: var(--button-background);
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
   position: fixed;
+  right: 80px;
+  width: 100px;
+  height: 50px;
   bottom: 20px;
-  right: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
-}
-
-.icon-plus {
-  padding: 0 10px;
-  font-size: xx-large;
+  transition-duration: 1.0s;
+  box-shadow: 2px 2px 10px rgba(55, 55, 55, 0.687);
 }
 
 .content {
@@ -149,11 +130,8 @@ button {
   margin-top: 20px;
 }
 
-.bxs-note {
-  font-size: xx-large;
-}
-
-textarea, .Alertsy {
+textarea,
+.Alertsy {
   padding: 20px;
   margin-top: 5px;
   outline: none;
@@ -163,44 +141,45 @@ textarea, .Alertsy {
   font-size: 1rem;
   width: 100%;
   height: 70%;
-  color: var(--text-color);
+  color: var(--text-bloco-color);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.571);
   transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.418);
 }
 
-textarea:hover{
+textarea:hover {
   box-shadow: 0 2px 4px rgb(255, 153, 0);
 }
 
-.Alertsy:hover{
+.Alertsy:hover {
   box-shadow: 0 2px 4px rgb(255, 0, 0);
 }
 
-/* Estilo de scrollbar */
-textarea::-webkit-scrollbar, .Alertsy::-webkit-scrollbar {
+textarea::-webkit-scrollbar,
+.Alertsy::-webkit-scrollbar {
   width: 4px;
 }
 
-textarea::-webkit-scrollbar-thumb, .Alertsy::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb,
+.Alertsy::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: var(--scrollbar-thumb-color);
 }
 
-
-.item, .Alert {
+.item,
+.Alert {
   position: relative;
   width: 300px;
-  height: 260px;  
+  height: 260px;
   margin: 10px;
   padding: 15px;
-  border-radius: 10px;
-  backdrop-filter: blur(12px);
-  color: white;
-  box-shadow: 0 4px 8px rgba(205, 74, 60, 0.1);
+  border-radius: 12px;
+  border-radius: 30px;
+ background: #212121;
 }
 
-.remove, .remove-1 {
+.remove,
+.remove-1 {
   position: absolute;
   top: 10px;
   right: 15px;
