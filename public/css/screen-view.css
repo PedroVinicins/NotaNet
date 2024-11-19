@@ -5,32 +5,11 @@
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
       }
-
-    .addNote-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        font-size: 24px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        position: fixed;
-        right: 55px;
-        z-index: 1000;
-        box-shadow: 0 4px 6px rgba(56, 56, 56, 0.1);
-    }
   
     .content {
-        display: flex;
-        flex-wrap: wrap;
+        position: absolute;
+        top: 60px;
         gap: 1px;
-    }
-  
-    i {
-        font-size: x-large;
-        color: white;
     }
   
     .item, .Alert {
@@ -39,9 +18,9 @@
         height: 250px;
         margin: 10px;
         border-radius: 10px;
-        transition: background-color 0.3s ease;
-        background-color: var(--note-background); /* Usando variável */
-        color: var(--note-text-color); /* Usando variável */
+        transition: background-color 0.5s ease;
+        background-color: var(--note-background);
+        color: var(--note-text-color); 
     }
   
     .item:hover, .Alert:hover {
@@ -58,7 +37,7 @@
         font-size: 20px;
         width: 100%;
         height: 150px;
-        color: var(--text-color); /* Usando variável */
+        color: var( --text-bloco-color); 
     }
   }
 
@@ -71,8 +50,42 @@
         display: none !important;
     }
 
-    .addNote-content2{
-        display: none;
+    .addNote-content{
+        display: none !important;
+    }
+
+    .reset svg {
+      animation: tilt 4s linear infinite;
+    }
+    
+    @keyframes tilt {
+     
+      0% {
+        transform: rotate(10deg);
+      }
+    
+      25% {
+        transform: rotate(-20deg);
+      }
+    
+      75% {
+        transform: rotate(20deg);
+      }
+    
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+
+    .reset:hover:not(:has(input:checked)) > svg {
+      fill: #ff6200;
+      opacity: 0.6;
+    }
+
+    .reset > svg {
+      transition: 300ms;
+      fill: red;
+      margin-top: 0;
     }
 
 
@@ -92,8 +105,11 @@ section {
     justify-content: space-evenly;
     background-color: var(--col-dark);
     border-radius: 30px;
+    box-shadow: 2px 2px 10px rgba(55, 55, 55, 0.687);
+  
   }
-  .label {
+
+  .label{
     padding: 8px 18px;
     transition: all 200ms;
     display: inline-block;
@@ -102,15 +118,12 @@ section {
   .label input[type="radio"] {
     display: none;
   }
-  .label > svg {
-    transition: all 200ms;
-    fill: var(--col-gray);
-    width: 14px;
-  }
+
   .label:hover:not(:has(input:checked)) > svg {
-    fill: #d17842;
+    fill: #ff6200;
     opacity: 0.6;
   }
+
   .label::before {
     content: "";
     display: block;

@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "/public/index.html"
+to = "/public/NotaNet.html"
 status = 200

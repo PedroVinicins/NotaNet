@@ -164,15 +164,18 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('dark-theme', body.classList.contains('dark-theme'));
 });
 
-document.getElementById('resetbtn').addEventListener("click", function (e) {
-  e.preventDefault();
+function resetConfigurations() {
   localStorage.removeItem("dark-theme");
   body.classList.remove("dark-theme");
   localStorage.removeItem("items_db");
-  items_db = []; 
+  items_db = [];
   content.innerHTML = "";
   alert("Configurações foram redefinidas!");
-});
+}
+
+document.getElementById('resetbtn').addEventListener("click", resetConfigurations);
+document.getElementById('btnreset')?.addEventListener("click", resetConfigurations);
+
 
 addEvents();
 loadItems();
