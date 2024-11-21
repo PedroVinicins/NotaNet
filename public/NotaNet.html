@@ -12,7 +12,7 @@
   " sizes="36x36" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NotaNet</title>
+  <title>NotaNet.</title>
 </head>
 
 <body>
@@ -41,9 +41,11 @@
           </a>
         </li>
 
+        <!-- bnt do tema escuro -->
         <ul id="side_items">
           <li class="side-item">
-            <a>
+
+            <a class="thema escuro">
               <span class="item-description">
                 <label class="switch">
                   <span class="sun"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -65,8 +67,8 @@
               </span>
               <i class='bx bxs-moon'></i>
             </a>
-          </li>
 
+          </li>
           <li class="side-item">
             <a href="https://github.com/PedroVinicins/NotaNet">
               <i class='bx bxl-github'></i>
@@ -109,6 +111,7 @@
         </button>
     </div>
   </nav>
+
   <main>
     <header class="header">
       <h1>Nota<span>Net.</span></h1>
@@ -128,7 +131,7 @@
       </ul>
     </header>
 
-
+    <!--config das notas-->
     <div class="container"></div>
     <div class="content">
       <div class="note">
@@ -137,66 +140,42 @@
       </div>
     </div>
 
-    <section>
 
-      <a href="#">
+    <!--Versao pro mobile-->
+    <section>
+      <a>
         <span class="item-description">
           <label class="switch">
-            <span class="sun"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <g fill="#ffd43b">
-                  <circle r="5" cy="12" cx="12"></circle>
-                  <path
-                    d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z">
-                  </path>
-                </g>
-              </svg></span>
-            <span class="moon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                <path
-                  d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
-                </path>
-              </svg></span>
             <input type="checkbox" class="input" id="theme-toggle1" aria-label="Alternar tema">
             <span class="slider"></span>
           </label>
         </span>
       </a>
-      </li>
 
       <label title="reset" for="reset" class="label">
-        <div  id="btnreset">
-          <input id="reset" type="radio"  />
+        <div id="btnreset">
+          <input id="reset" type="radio" />
         </div>
-     <span class="reset"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 28" height="28" width="25">
-      <path
-       d="M12,2a10.032,10.032,0,0,1,7.122,3H16a1,1,0,0,0-1,1h0a1,1,0,0,0,1,1h4.143A1.858,1.858,0,0,0,22,5.143V1a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1V3.078A11.981,11.981,0,0,0,.05,10.9a1.007,1.007,0,0,0,1,1.1h0a.982.982,0,0,0,.989-.878A10.014,10.014,0,0,1,12,2Z"/><path d="M22.951,12a.982.982,0,0,0-.989.878A9.986,9.986,0,0,1,4.878,19H8a1,1,0,0,0,1-1H9a1,1,0,0,0-1-1H3.857A1.856,1.856,0,0,0,2,18.857V23a1,1,0,0,0,1,1H3a1,1,0,0,0,1-1V20.922A11.981,11.981,0,0,0,23.95,13.1a1.007,1.007,0,0,0-1-1.1Z">
-      </path>
-    </svg></span>  
+        <span class="reset"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 28" height="28" width="25">
+            <path
+              d="M12,2a10.032,10.032,0,0,1,7.122,3H16a1,1,0,0,0-1,1h0a1,1,0,0,0,1,1h4.143A1.858,1.858,0,0,0,22,5.143V1a1,1,0,0,0-1-1h0a1,1,0,0,0-1,1V3.078A11.981,11.981,0,0,0,.05,10.9a1.007,1.007,0,0,0,1,1.1h0a.982.982,0,0,0,.989-.878A10.014,10.014,0,0,1,12,2Z" />
+            <path
+              d="M22.951,12a.982.982,0,0,0-.989.878A9.986,9.986,0,0,1,4.878,19H8a1,1,0,0,0,1-1H9a1,1,0,0,0-1-1H3.857A1.856,1.856,0,0,0,2,18.857V23a1,1,0,0,0,1,1H3a1,1,0,0,0,1-1V20.922A11.981,11.981,0,0,0,23.95,13.1a1.007,1.007,0,0,0-1-1.1Z">
+            </path>
+          </svg></span>
       </label>
 
-
-      <label title="home" for="home" class="label">
-        <input id="home" name="page" type="radio" checked="" />
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" height="20" width="21" class="icon home">
-          <path fill="inherit"
-            d="M18.9999 6.01002L12.4499 0.770018C11.1699 -0.249982 9.16988 -0.259982 7.89988 0.760018L1.34988 6.01002C0.409885 6.76002 -0.160115 8.26002 0.0398848 9.44002L1.29988 16.98C1.58988 18.67 3.15988 20 4.86988 20H15.4699C17.1599 20 18.7599 18.64 19.0499 16.97L20.3099 9.43002C20.4899 8.26002 19.9199 6.76002 18.9999 6.01002ZM10.9199 16C10.9199 16.41 10.5799 16.75 10.1699 16.75C9.75988 16.75 9.41988 16.41 9.41988 16V13C9.41988 12.59 9.75988 12.25 10.1699 12.25C10.5799 12.25 10.9199 12.59 10.9199 13V16Z">
-          </path>
-        </svg>
+      <label title="AddNota" for="AddNota" class="label">
+        <div class="addNote-content2">
+          <input id="AddNota" type="radio" />
+        </div>
+        <span class="AddNota">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 28" height="28" width="25">
+            <path
+              d="M22.853,1.148a3.626,3.626,0,0,0-5.124,0L1.465,17.412A4.968,4.968,0,0,0,0,20.947V23a1,1,0,0,0,1,1H3.053a4.966,4.966,0,0,0,3.535-1.464L22.853,6.271A3.626,3.626,0,0,0,22.853,1.148ZM5.174,21.122A3.022,3.022,0,0,1,3.053,22H2V20.947a2.98,2.98,0,0,1,.879-2.121L15.222,6.483l2.3,2.3ZM21.438,4.857,18.932,7.364l-2.3-2.295,2.507-2.507a1.623,1.623,0,1,1,2.295,2.3Z">
+            </path>
+          </svg></span>
       </label>
-
- 
-
-          <label title="AddNota" for="AddNota" class="label">
-            
-      <div class="addNote-content2">
-            <input id="AddNota" type="radio" />
-      </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="Iconadd" viewBox="0 0 30 28" height="28" width="25">
-              <path
-                d="M22.853,1.148a3.626,3.626,0,0,0-5.124,0L1.465,17.412A4.968,4.968,0,0,0,0,20.947V23a1,1,0,0,0,1,1H3.053a4.966,4.966,0,0,0,3.535-1.464L22.853,6.271A3.626,3.626,0,0,0,22.853,1.148ZM5.174,21.122A3.022,3.022,0,0,1,3.053,22H2V20.947a2.98,2.98,0,0,1,.879-2.121L15.222,6.483l2.3,2.3ZM21.438,4.857,18.932,7.364l-2.3-2.295,2.507-2.507a1.623,1.623,0,1,1,2.295,2.3Z" />
-            </svg>
-            </svg>
-          </label>
-     
 
     </section>
   </main>
