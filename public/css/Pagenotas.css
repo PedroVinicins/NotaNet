@@ -1,3 +1,4 @@
+
 #sidebar {
   width: 23%;
   background-color: #202023;
@@ -6,20 +7,19 @@
   border-right: 1px solid #000000;
 }
 
-#listnotas {
+#listnotas{
   display: flex;
+  float: right;
   position: relative;
-  align-items: center;
-  left: -110px;
+  left: -134px;
   width: 25%;
-  height: auto;
-  height: 90%;
+  height: 95vh;
   background-color: #1C1C1E;
   flex-direction: column;
   border-right: 1px solid #000000;
 }
 
-header input {
+header input{
   position: relative;
   left: -45px;
   padding: 5px;
@@ -45,7 +45,6 @@ header input {
   font-weight: 600;
   color: #ffffff;
 }
-
 
 .side-folder {
   display: flex;
@@ -76,24 +75,14 @@ i {
   font-size: 25px;
 }
 
-.note-name {
+h1 {
+  display: flex;
   outline: none;
   border: none;
-  width: 100%;
-  text-align: center;
   font-size: 20px;
   margin-left: 12px;
+  align-items: center;
   background-color: transparent;
-}
-
-.apagaTudo {
-  position: relative;
-  left: 220px;
-  top: -45px;
-  z-index: 1000;
-  color: #EDBB08;
-  cursor: pointer;
-  font-weight: bold;
 }
 
 #addFolderBtn {
@@ -107,25 +96,10 @@ i {
   width: 15%;
   color: #EDBB08;
   font-size: 1.0rem;
-  background-color: #202023;
+  background-color: #202023 ;
   border: none;
   cursor: pointer;
   outline: none;
   transition: color 0.3s;
   z-index: 1;
-}
-
-/* NOTAS SALVAS CSS */
-
-.notasSalvas {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 130px;
-  width: 250px;
-  margin-top: 12px;
-  border-radius: 12px;
-  background-color: #454549dc;
-  color: white;
 }

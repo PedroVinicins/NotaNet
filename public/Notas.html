@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/css/sidebar.css">
-  <link rel="stylesheet" href="/public/css/home.css">
   <link rel="stylesheet" href="/public/css/notas.css">
+  <link rel="stylesheet" href="/public/css/Pagenotas.css">
+  <link rel="stylesheet" href="/public/css/home.css">
   <script type="module" src="/public/js/index.js"></script>
-  <title>NotaNet.</title>
+  <title>Nota</title>
 </head>
 
 <body>
+
   <nav id="sidebar">
     <header class="sidebar-header">
       <h2>NotaNet.</h2>
@@ -23,21 +23,19 @@
     </button>
   </nav>
   
-  
-  
   <main>
     <header>
       <input type="search" name="Notas" id="searchNotas" placeholder="Search all Notes">
     </header>
     <nav id="listnotas">
-      <span class="apagaTudo"><i class='bx bx-trash'></i></span>
+      <div class="content"></div>
     </nav>
-
-    <div id="notes-container"></div>
+    <div class="container">
+      <div class="note-content">
+          <h2 contenteditable="true" class="note-title">Nota de exemplo</h2>
+        <textarea placeholder="Escreva sua nota aqui..."></textarea>
+    </div>
   </main>
-
-
-
 </body>
 
 </html>

@@ -1,4 +1,73 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #1C1C1E;
+}
+
+header {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    z-index: 1000;
+    background-color: #323236;
+}
+
+.remove {
+    position: relative;
+    color: #EDBB08;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Box de notas */
+
+.Box {
+    position: relative;
+    width: 200px;
+    height: 160px;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #a0a0a0;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+.note-date {
+    font-size: 12px;
+}
+
+.note-title{
+    display: grid;
+    outline: none;
+    font-size: 35px;
+    text-align: center;
+    width: 100%;
+    color: wheat;
+    border-bottom: solid 1px;
 }
