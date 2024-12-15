@@ -1,8 +1,6 @@
 [[redirects]]
 from = "/*"
-<<<<<<< HEAD
 to = "/public/Manutencao.html"
 =======
 to = "/public/Manutençao.html"
->>>>>>> 17122436fff29cd0c6864402895fd892630f3175
 status = 200
