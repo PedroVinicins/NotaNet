@@ -1,43 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/css/sidebar.css">
   <link rel="stylesheet" href="/public/css/home.css">
-  <link rel="stylesheet" href="/public/css/notas.css">
   <script type="module" src="/public/js/index.js"></script>
   <title>NotaNet.</title>
 </head>
-
 <body>
+  <header class="sidebar-header">
+    <h2>NotaNet.</h2>
+    <input type="search" name="Notas" id="searchNotas" placeholder="Search all Notes">
+  </header>
+  
   <nav id="sidebar">
-    <header class="sidebar-header">
-      <h2>NotaNet.</h2>
-    </header>
-    <button id="addFolderBtn"><i class='bx bx-folder-plus'></i>
-      <p>New Folder</p>
-    </button>
+    <button id="addFolderBtn"><i class='bx bx-folder-plus'></i><p>New Folder</p></button>
   </nav>
   
+  <nav id="listnotas">
+    <span class="apagaTudo"><i class='bx bx-trash'></i></span>
+  </nav>
   
-  
-  <main>
-    <header>
-      <input type="search" name="Notas" id="searchNotas" placeholder="Search all Notes">
-    </header>
-    <nav id="listnotas">
-      <span class="apagaTudo"><i class='bx bx-trash'></i></span>
-    </nav>
-
+  <section>
     <div id="notes-container"></div>
-  </main>
-
-
-
+  </section>
 </body>
 
 </html>

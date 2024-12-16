@@ -1,6 +1,4 @@
 [[redirects]]
 from = "/*"
 to = "/public/Manutencao.html"
-=======
-to = "/public/Manutençao.html"
 status = 200
