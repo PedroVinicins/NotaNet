@@ -10,7 +10,7 @@ function createFolderElement(sectionTitle) {
 
     folderItem.innerHTML = `
         <i class='bx bx-folder'></i>
-        <h1 contenteditable="true" class="note-name">${sectionTitle}</h1> 
+        <h1 contenteditable="true" class="note-nameF">${sectionTitle}</h1> 
     `;
 
     return folderItem;
@@ -32,7 +32,7 @@ function createNoteElement(item) {
 
 function createNoteClass() {
     const notaclass = document.createElement('div');
-    notaclass.classList.add('container'); // Adiciona a classe ao container principal
+    notaclass.classList.add('container'); 
     notaclass.innerHTML = `
       <div class="note-content">
           <h2 contenteditable="true" class="note-title">Nota de exemplo</h2>

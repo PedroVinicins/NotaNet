@@ -1,54 +1,196 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
-    overflow-y: auto;
-    overflow-x:hidden;
-    color: white;
-    background-color: #1C1C1E;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: white;
+  height: 100%;
+  background-color: #1C1C1E;
 }
 
 .sidebar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    color: white;
-    background-color: #323236;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  color: white;
+  background-color: #323236;
+  z-index: 15;
+
 }
 
 input {
-    position: relative;
-    padding: 5px;
-    width: 250px;
-    color: white;
-    background-color: #454549dc;
-    border-radius: 12px;
-    border: none;
-    outline: none;
+  position: relative;
+  padding: 5px;
+  width: 250px;
+  left: -729px;
+  color: white;
+  background-color: #454549dc;
+  border-radius: 12px;
+  border: none;
+  outline: none;
 }
 
 #sidebar {
-    position: relative;
-    width: 345px;
-    height: 100%;
-    background-color: #202023;
-    transition: .8s;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
+  display: block;
+  position: absolute;
+  width: 250px;
+  min-height: 100%;
+  height: auto;
+  /* Altura ajustável acima do mínimo */
+  background-color: #202023;
+  transition: .8s;
+  color: #fff;
+  border-right: solid 1px black;
 }
 
-section{
-    display: grid;
-    width: 73%;
-    height: 100%;
-    border-radius: 15px;
-    background-color: #333;
-    z-index: 1;
-    transition: .8s;
+#listnotas {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  left: 350px;
+  width: 150px;
+  min-height: 100%;
+  height: auto;
+  background-color: #1C1C1E;
+  flex-direction: column;
+}
+
+
+/* Folde*/
+.folder {
+  display: flex;
+  margin: 5px;
+  border-radius: 10px;
+  background-color: transparent;
+  color: white;
+}
+
+.folder:hover {
+  background-color: #cccccc80;
+  color: white;
+}
+
+i {
+  color: #EDBB08;
+  font-size: 25px;
+}
+
+.note-name {
+  outline: none;
+  border: none;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 25px;
+  background-color: transparent;
+}
+.note-nameF {
+  outline: none;
+  border: none;
+  margin-left: 12px;
+  font-size: 20px;
+  background-color: transparent;
+}
+
+.note-date{
+  outline: none;
+  border: none;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+  background-color: transparent;
+}
+
+.apagaTudo {
+  position: relative;
+  left: 400px;
+  top: -40px;
+  z-index: 1000;
+  color: #EDBB08;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#addFolderBtn {
+  display: flex;
+  position: fixed;
+  top: 570px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5px;
+  padding: 15px;
+  width: 15%;
+  color: #EDBB08;
+  font-size: 1.0rem;
+  background-color: #202023;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.3s;
+  z-index: 1;
+}
+
+/* NOTAS SALVAS CSS */
+
+.notasSalvas {
+  display: grid;
+  position: relative;
+  left: -50px;
+  height: 70px;
+  width: 235px;
+  border-radius: 12px;
+  margin: 5px;
+  background-color: #454549dc;
+  color: white;
+}
+
+.main-notes {
+  display: flex;
+  position: relative;
+  left: 501px;
+  width: 890px;
+  height: auto;
+  min-height: 640px;
+  background-color: #1C1C1E;
+  border-left: solid 1px black;
+  z-index: 1;
+  transition: .8s;
+}
+
+.note-title{
+  outline: none;
+  border: none;
+  width: 100%;
+  margin: 5px;
+  border-bottom: solid 1px wheat;
+  text-align: center;
+  font-size: 35px;
+  background-color: transparent;
+}
+
+/* Textarea */
+textarea {
+  padding: 14px;
+  outline: none;
+  resize: none;
+  border: none;
+  background-color: #1C1C1E;
+  font-size: 18px;
+  width: 840px;
+  height: 350px;
+  color: #ffffff;
+}
+
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: bisque;
 }
