@@ -1,1 +1,1 @@
-import {} from './sidebar.js'; 
+import {} from './function.js'; 
