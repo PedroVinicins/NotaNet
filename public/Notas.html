@@ -1,41 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/css/notas.css">
-  <link rel="stylesheet" href="/public/css/Pagenotas.css">
-  <link rel="stylesheet" href="/public/css/home.css">
-  <script type="module" src="/public/js/index.js"></script>
-  <title>Nota</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/public/css/home.css">
+    <title>NotaNet</title>
+    <style>
+        .editable {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .line input[type="checkbox"] {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
-
-  <nav id="sidebar">
     <header class="sidebar-header">
-      <h2>NotaNet.</h2>
+        <h2>NotaNet</h2>
+        <input type="search" name="Notas" id="searchNotas" placeholder="Search all Notes">
+        <button onclick="addCheckboxLine()">Adicionar Linha com Checkbox</button>
+        <span class="apagaTudo"><i class='bx bx-trash'></i></span>
     </header>
-    <button id="addFolderBtn"><i class='bx bx-folder-plus'></i>
-      <p>New Folder</p>
-    </button>
-  </nav>
-  
-  <main>
-    <header>
-      <input type="search" name="Notas" id="searchNotas" placeholder="Search all Notes">
-    </header>
-    <nav id="listnotas">
-      <div class="content"></div>
-    </nav>
-    <div class="container">
-      <div class="note-content">
-          <h2 contenteditable="true" class="note-title">Nota de exemplo</h2>
-        <textarea placeholder="Escreva sua nota aqui..."></textarea>
+
+    <nav id="sidebar"></nav>
+    <button id="addFolderBtn"><i class='bx bx-folder-plus'></i><p>New Folder</p></button>
+
+    <nav id="listnotas"></nav>
+    <div id="notes-container" class="main-notes">
+        <div id="editable" class="editable" contenteditable="true"></div>
     </div>
-  </main>
+
+    <script>
+function addCheckboxLine() {
+    const editableDiv = document.getElementById("editable");
+
+    const line = document.createElement("div");
+    line.className = "line";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    const textNode = document.createElement("span");
+    textNode.contentEditable = true;
+    textNode.textContent = "-"
+
+    line.appendChild(checkbox);
+    line.appendChild(textNode);
+    editableDiv.appendChild(line);
+
+    // Coloca o foco no novo texto editável
+    textNode.focus();
+}
+
+    </script>
 </body>
 
 </html>

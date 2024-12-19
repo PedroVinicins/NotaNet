@@ -5,14 +5,17 @@
 }
 
 body {
-  overflow-y: hidden;
-  overflow-x: hidden;
   color: white;
-  height: 100%;
+  height: 100%;  
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%;
   background-color: #1C1C1E;
 }
 
 .sidebar-header {
+  position: relative;
   display: flex;
   width: 100%;
   align-items: center;
@@ -20,7 +23,7 @@ body {
   padding: 15px;
   color: white;
   background-color: #323236;
-  z-index: 15;
+  z-index: 1;
 }
 
 input {
@@ -41,6 +44,14 @@ input {
   cursor: pointer;
 }
 
+.add-checkbox-line {
+  position: absolute; /* ou fixed, dependendo do caso */
+  left: 100px;
+  top: -600px;
+  color: #EDBB08;
+  cursor: pointer;
+  z-index: 9999; /* Certifique-se de que este valor seja maior que o dos outros elementos */
+}
 #sidebar {
   display: flex;
   position: absolute;
@@ -88,7 +99,7 @@ input {
   left: 251px;
   width: 250px;
   min-height: auto;
-  height: 100vb;
+  height: 95vb;
   transition: .8s;
   border-right: solid 1px black;
   background-color: #1C1C1E;
@@ -217,7 +228,7 @@ i {
 
 /* Personalização da barra de rolagem */
 .main-notes::-webkit-scrollbar {
-  width: 5px;
+width: 1px;
   /* Largura da barra */
 }
 
@@ -239,9 +250,10 @@ i {
 }
 
 .note-content{
-  width: 890px;
+  min-width: 100vb;
+  width: 100%;
   min-height: auto;
-  height: 100vb;  
+  height: 100vb;
   background-color: #1C1C1E;
   transition: .8s;
   overflow-y: auto;
@@ -262,7 +274,7 @@ i {
 }
 
 /* Textarea */
-textarea {
+.note-body {
   padding: 14px;
   outline: none;
   resize: none;
@@ -271,17 +283,33 @@ textarea {
   overflow-x: auto;
   background-color: #1C1C1E;
   font-size: 18px;
-  width: 100vb;
+  width: 140vb;
   min-height: 10vb;
   height: 80%;
   color: #ffffff;
 }
 
-textarea::-webkit-scrollbar {
+.note-body::-webkit-scrollbar {
   width: 6px;
 }
 
-textarea::-webkit-scrollbar-thumb {
+.note-body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: bisque;
 }
+
+.line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+span{
+  margin-left: 12px;
+}
+
+.line input[type="checkbox"] {
+  left: 0px;
+  margin-left: 12px;
+}
+
