@@ -5,6 +5,7 @@ const notas = document.getElementById('notes-container');
 const apagaTudoBtn = document.querySelector('.apagaTudo');
 
 let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
+let currentIndex = 0;   
 
 // Função para criar a pasta
 function createFolderElement(sectionTitle) {
@@ -30,8 +31,8 @@ function createNoteElement(item) {
     return noteItem;
 }
 
-// Função para criar uma nota com conteúdo editável
-function createNoteContent(item, index) {
+// Função para criar uma nota com conteúdo editável e checkbox
+function createNoteContent(item) {
     const noteContainer = document.createElement('div');
     noteContainer.classList.add('container');
     noteContainer.innerHTML = `
@@ -40,16 +41,9 @@ function createNoteContent(item, index) {
           <textarea placeholder="Escreva sua nota aqui...">${item.content || ''}</textarea>
       </div>
     `;
-
-    // Adiciona evento para salvar o conteúdo do textarea
-    const textarea = noteContainer.querySelector('textarea');
-    textarea.addEventListener('input', () => {
-        savedData[index].content = textarea.value; // Atualiza o conteúdo no array
-        updateLocalStorage(); // Salva no LocalStorage
-    });
-
     return noteContainer;
 }
+
 
 // Função principal: adicionar uma nova pasta
 function addFolder(sectionTitle = "Nova Pasta") {
@@ -57,8 +51,6 @@ function addFolder(sectionTitle = "Nova Pasta") {
 
     savedData.push(noteData);
     updateLocalStorage();
-
-    // Adiciona aos elementos visuais
     renderData();
 }
 
@@ -67,7 +59,48 @@ function updateLocalStorage() {
     localStorage.setItem('notasData', JSON.stringify(savedData));
 }
 
-// Renderiza os dados
+document.addEventListener('input', (event) => {
+    const element = event.target;
+
+    if (element.classList.contains('note-name') || element.classList.contains('note-title')) {
+        const index = [...document.querySelectorAll('.note-name, .note-title')].indexOf(element);
+        if (index >= 0 && index < savedData.length) {
+            savedData[index].name = element.innerText.trim();
+            updateLocalStorage();
+        }
+    }
+
+    if (element.tagName === 'TEXTAREA') {
+        const index = [...document.querySelectorAll('textarea')].indexOf(element);
+        if (index >= 0 && index < savedData.length) {
+            savedData[index].content = element.value.trim();
+            updateLocalStorage();
+        }
+    }
+});
+
+
+// Função para descer uma nota
+function descerScroll() {
+    const sections = document.querySelectorAll('.note-content');
+    if (currentIndex < sections.length - 1) {
+        currentIndex++;
+        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
+    } else {
+        alert("Você já está na última nota!");
+    }
+}
+
+// Atualiza o índice ao clicar em uma nota lateral
+function handleNoteClick(index) {
+    const sections = document.querySelectorAll('.note-content');
+    if (index >= 0 && index < sections.length) {
+        currentIndex = index;
+        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
+    }
+}
+
+// Renderiza os dados e adiciona eventos aos itens da lista lateral
 function renderData() {
     sidebar.innerHTML = "";
     listnotas.innerHTML = "";
@@ -82,7 +115,12 @@ function renderData() {
 
         const noteContent = createNoteContent(item, index);
         notas.appendChild(noteContent);
+
+        // Adiciona evento para cada nota lateral
+        noteItem.addEventListener('click', () => handleNoteClick(index));
     });
+
+    currentIndex = 0; // Reinicia o índice
 }
 
 // Evento: Adicionar pasta

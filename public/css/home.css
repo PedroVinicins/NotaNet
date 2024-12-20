@@ -281,7 +281,8 @@ textarea {
   overflow-x: auto;
   background-color: #1C1C1E;
   font-size: 18px;
-  width: 140vb;
+  width: auto;
+  min-width: 140vh;
   min-height: 10vb;
   height: 80%;
   color: #ffffff;
@@ -295,19 +296,3 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: bisque;
 }
-
-.line {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-span{
-  margin-left: 12px;
-}
-
-.line input[type="checkbox"] {
-  left: 0px;
-  margin-left: 12px;
-}
-
