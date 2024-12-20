@@ -46,8 +46,6 @@ input {
 
 .add-checkbox-line {
   position: absolute; /* ou fixed, dependendo do caso */
-  left: 100px;
-  top: -600px;
   color: #EDBB08;
   cursor: pointer;
   z-index: 9999; /* Certifique-se de que este valor seja maior que o dos outros elementos */
@@ -274,7 +272,7 @@ width: 1px;
 }
 
 /* Textarea */
-.note-body {
+textarea {
   padding: 14px;
   outline: none;
   resize: none;
@@ -289,11 +287,11 @@ width: 1px;
   color: #ffffff;
 }
 
-.note-body::-webkit-scrollbar {
+textarea::-webkit-scrollbar {
   width: 6px;
 }
 
-.note-body::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: bisque;
 }
