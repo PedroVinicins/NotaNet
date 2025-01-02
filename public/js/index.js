@@ -1,2 +1,1 @@
-import {} from './function.js'; 
-
+import {} from './function.js';

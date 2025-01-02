@@ -1,33 +1,31 @@
-const addFolderBtn = document.getElementById('addFolderBtn');
-const sidebar = document.getElementById('sidebar');
+const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
 const notas = document.getElementById('notes-container');
 const apagaTudoBtn = document.querySelector('.apagaTudo');
 
 let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
-let currentIndex = 0;   
-
-// Função para criar a pasta
-function createFolderElement(sectionTitle) {
-    const folderItem = document.createElement('div');
-    folderItem.classList.add('folder');
-    folderItem.innerHTML = `
-        <i class='bx bx-folder'></i>
-        <h1 contenteditable="true" class="note-nameF">${sectionTitle}</h1>
-    `;
-    return folderItem;
-}
+let currentIndex = 0;
 
 // Função para criar uma nota na lista lateral
 function createNoteElement(item) {
     const noteItem = document.createElement('div');
     noteItem.classList.add('suasNotasSalvas');
     noteItem.innerHTML = `
-      <div class="notasSalvas">
-          <h1 contenteditable="true" class="note-name">${item.name}</h1>
-          <p class="note-date">${item.date}</p>
-      </div>
+        <div class="notasSalvas">
+            <h1 contenteditable="true" class="note-name">${item.name}</h1>
+            <p class="note-date">${item.date}</p>
+        </div>
     `;
+
+    const noteNameElement = noteItem.querySelector('.note-name');
+    noteNameElement.addEventListener('input', () => {
+        // Atualiza o título editável no conteúdo da nota quando o nome da nota mudar
+        const noteContentElement = document.querySelector('.note-title');
+        noteContentElement.innerText = noteNameElement.innerText;
+        item.name = noteNameElement.innerText;
+        updateLocalStorage();
+    });
+
     return noteItem;
 }
 
@@ -36,49 +34,34 @@ function createNoteContent(item) {
     const noteContainer = document.createElement('div');
     noteContainer.classList.add('container');
     noteContainer.innerHTML = `
-      <div class="note-content">
-          <h2 contenteditable="true" class="note-title">${item.name}</h2>
-          <textarea placeholder="Escreva sua nota aqui...">${item.content || ''}</textarea>
-      </div>
+        <div class="note-content">
+            <h2 contenteditable="true" class="note-title">${item.name}</h2>
+            <textarea placeholder="Escreva sua nota aqui...">${item.content || ''}</textarea>
+        </div>
     `;
+
+    const noteTitleElement = noteContainer.querySelector('.note-title');
+    noteTitleElement.addEventListener('input', () => {
+        // Atualiza o título editável no elemento da nota quando o conteúdo mudar
+        const noteNameElement = document.querySelector('.note-name');
+        noteNameElement.innerText = noteTitleElement.innerText;
+        item.name = noteTitleElement.innerText;
+        updateLocalStorage();
+    });
+
+    const noteContentElement = noteContainer.querySelector('textarea');
+    noteContentElement.addEventListener('input', () => {
+        item.content = noteContentElement.value;
+        updateLocalStorage();
+    });
+
     return noteContainer;
-}
-
-
-// Função principal: adicionar uma nova pasta
-function addFolder(sectionTitle = "Nova Pasta") {
-    const noteData = { name: sectionTitle, date: new Date().toLocaleString(), content: "" };
-
-    savedData.push(noteData);
-    updateLocalStorage();
-    renderData();
 }
 
 // Salva no LocalStorage
 function updateLocalStorage() {
     localStorage.setItem('notasData', JSON.stringify(savedData));
 }
-
-document.addEventListener('input', (event) => {
-    const element = event.target;
-
-    if (element.classList.contains('note-name') || element.classList.contains('note-title')) {
-        const index = [...document.querySelectorAll('.note-name, .note-title')].indexOf(element);
-        if (index >= 0 && index < savedData.length) {
-            savedData[index].name = element.innerText.trim();
-            updateLocalStorage();
-        }
-    }
-
-    if (element.tagName === 'TEXTAREA') {
-        const index = [...document.querySelectorAll('textarea')].indexOf(element);
-        if (index >= 0 && index < savedData.length) {
-            savedData[index].content = element.value.trim();
-            updateLocalStorage();
-        }
-    }
-});
-
 
 // Função para descer uma nota
 function descerScroll() {
@@ -102,18 +85,14 @@ function handleNoteClick(index) {
 
 // Renderiza os dados e adiciona eventos aos itens da lista lateral
 function renderData() {
-    sidebar.innerHTML = "";
     listnotas.innerHTML = "";
     notas.innerHTML = "";
 
     savedData.forEach((item, index) => {
-        const folder = createFolderElement(item.name);
-        sidebar.appendChild(folder);
-
         const noteItem = createNoteElement(item);
         listnotas.appendChild(noteItem);
 
-        const noteContent = createNoteContent(item, index);
+        const noteContent = createNoteContent(item);
         notas.appendChild(noteContent);
 
         // Adiciona evento para cada nota lateral
@@ -123,14 +102,21 @@ function renderData() {
     currentIndex = 0; // Reinicia o índice
 }
 
-// Evento: Adicionar pasta
-addFolderBtn.addEventListener('click', () => {
-    const folderName = prompt("Digite o nome da nova pasta:");
-    if (folderName && folderName.trim()) {
-        addFolder(folderName.trim());
-    } else {
-        alert("Nome da pasta inválido.");
-    }
+function addNewNote() {
+    const noteName = prompt("Digite o nome da sua nova nota:", "Nova Nota");
+    const newNote = {
+        name: noteName || "Nova Nota", // Use the entered name, or default to "Nova Nota"
+        date: new Date().toLocaleDateString(),
+        content: ''
+    };
+
+    savedData.push(newNote);
+    updateLocalStorage();
+    renderData();
+}
+
+btnNotes.addEventListener('click', () => {
+    addNewNote();
 });
 
 // Evento: Apagar tudo

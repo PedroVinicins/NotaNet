@@ -14,6 +14,13 @@ body {
   background-color: #1C1C1E;
 }
 
+h4{
+  position: relative;
+  left: 776px;
+  color: #EDBB08;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .sidebar-header {
   position: relative;
   display: flex;
@@ -29,7 +36,7 @@ body {
 input {
   position: relative;
   padding: 5px;
-  left: -350px;
+  left: -550px;
   color: white;
   background-color: #454549dc;
   border-radius: 12px;
@@ -50,13 +57,13 @@ input {
   cursor: pointer;
   z-index: 9999; /* Certifique-se de que este valor seja maior que o dos outros elementos */
 }
-#sidebar {
+#listnotas {
   display: flex;
   position: absolute;
   flex-direction: column;
   width: 250px;
   min-height: auto;
-  height: 120vb;
+  height: 85vb;
   background-color: #202023;
   transition: .8s;
   color: #fff;
@@ -68,59 +75,22 @@ input {
 }
 
 /* Personalização da barra de rolagem */
-#sidebar::-webkit-scrollbar {
-  width: 1px;
-  /* Largura da barra */
-}
-
-#sidebar::-webkit-scrollbar-track {
-  background: #2C2C2E;
-  /* Cor de fundo da trilha */
-}
-
-#sidebar::-webkit-scrollbar-thumb {
-  background-color: #4A4A4D;
-  /* Cor da barra */
-  border-radius: 3px;
-  /* Arredondamento */
-}
-
-#sidebar::-webkit-scrollbar-thumb:hover {
-  background-color: #5C5C5E;
-  /* Cor da barra ao passar o mouse */
-}
-
-#listnotas {
-  display: flex;
-  position: absolute;
-  flex-direction: column;
-  left: 251px;
-  width: 250px;
-  min-height: auto;
-  height: 95vb;
-  transition: .8s;
-  border-right: solid 1px black;
-  background-color: #1C1C1E;
-  overflow-y: auto;
-  /* Scroll vertical */
-  overflow-x: hidden;
-}
-
-/* Personalização da barra de rolagem */
 #listnotas::-webkit-scrollbar {
-  width: 5px;
+  width: 1px;
+
   /* Largura da barra */
 }
 
 #listnotas::-webkit-scrollbar-track {
   background: #2C2C2E;
+  border-radius: 16px;
   /* Cor de fundo da trilha */
 }
 
 #listnotas::-webkit-scrollbar-thumb {
   background-color: #4A4A4D;
   /* Cor da barra */
-  border-radius: 3px;
+  
   /* Arredondamento */
 }
 
@@ -129,29 +99,15 @@ input {
   /* Cor da barra ao passar o mouse */
 }
 
+
 .notasSalvas {
   display: grid;
   position: relative;
-  height: 70px;
+  height: 85px;
   width: 241px;
   margin: 5px;
   border-radius: 12px;
   background-color: #454549dc;
-  color: white;
-}
-
-
-/* Folde*/
-.folder {
-  display: flex;
-  margin: 5px;
-  border-radius: 10px;
-  background-color: transparent;
-  color: white;
-}
-
-.folder:hover {
-  background-color: #cccccc80;
   color: white;
 }
 
@@ -186,17 +142,21 @@ i {
   background-color: transparent;
 }
 
-#addFolderBtn {
+#btnNotes {
   display: flex;
   position: relative;
-  left: 252px;
+  left: 0;
   align-items: center;
   width: 248px;
   padding: 12px;
   color: #EDBB08;
   font-size: 1.0rem;
+  margin: 3px;
   background-color: #202023;
-  border: none;
+  border-right: solid 1px black;
+ border-left: none;
+ border-top: none;
+ border-bottom: none;
   cursor: pointer;
   outline: none;
   transition: color 0.3s;
@@ -209,7 +169,7 @@ i {
 .main-notes {
   display: flex;
   position: relative;
-  left: 501px;
+  left: 300px;
   top: -48px;
   min-width: 100vb;
   width: 100%;
@@ -217,7 +177,6 @@ i {
   height: 100vb;
   transition: .8s;
   background-color: #1C1C1E;
-  border-left: solid 1px black;
   transition: .8s;
   overflow-y: auto;
   /* Scroll vertical */
