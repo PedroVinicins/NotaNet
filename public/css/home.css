@@ -22,21 +22,19 @@ h4{
 }
 
 .sidebar-header {
-  position: relative;
   display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: space-between;
   padding: 15px;
-  color: white;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(255, 255, 255);
   background-color: #323236;
   z-index: 1;
 }
 
 input {
-  position: relative;
-  padding: 5px;
-  left: -550px;
+  width: 300px;
+  padding: 7px;
   color: white;
   background-color: #454549dc;
   border-radius: 12px;
@@ -46,7 +44,7 @@ input {
 
 .apagaTudo {
   position: relative;
-  left: -750px;
+  left: -250px;
   color: #EDBB08;
   cursor: pointer;
 }
@@ -102,9 +100,8 @@ input {
 
 .notasSalvas {
   display: grid;
-  position: relative;
-  height: 85px;
-  width: 241px;
+  height: 120px;
+  width: 35vh;
   margin: 5px;
   border-radius: 12px;
   background-color: #454549dc;
@@ -138,7 +135,8 @@ i {
   border: none;
   margin-top: 5px;
   text-align: center;
-  font-size: 15px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 15px;  
   background-color: transparent;
 }
 

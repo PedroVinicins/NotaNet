@@ -17,6 +17,13 @@ function createNoteElement(item) {
         </div>
     `;
 
+    const noteName = noteItem.querySelector('.note-name'); 
+    noteName.addEventListener('input', function () { 
+        if (noteName.textContent.length > 19) { 
+            noteName.textContent = noteName.textContent.substring(0, 19); 
+        } 
+    });
+
     const noteNameElement = noteItem.querySelector('.note-name');
     noteNameElement.addEventListener('input', () => {
         // Atualiza o título editável no conteúdo da nota quando o nome da nota mudar
@@ -29,7 +36,7 @@ function createNoteElement(item) {
     return noteItem;
 }
 
-// Função para criar uma nota com conteúdo editável e checkbox
+// Função para criar uma nota com conteúdo editável
 function createNoteContent(item) {
     const noteContainer = document.createElement('div');
     noteContainer.classList.add('container');
@@ -57,6 +64,33 @@ function createNoteContent(item) {
 
     return noteContainer;
 }
+
+// Pesquisa de notas
+document.getElementById('searchNotas').addEventListener('input', function() {
+    const searchValue = this.value.toLowerCase();
+    const noteItems = document.querySelectorAll('.suasNotasSalvas');
+    const noteContents = document.querySelectorAll('.note-content');
+    
+    // Filtra notas laterais
+    noteItems.forEach(function(note) {
+        const noteName = note.querySelector('.note-name').textContent.toLowerCase();
+        if (noteName.includes(searchValue)) {
+            note.style.display = ''; // Mostrar nota
+        } else {
+            note.style.display = 'none'; // Ocultar nota
+        }
+    });
+
+    // Filtra conteúdos das notas
+    noteContents.forEach(function(note) {
+        const noteTitle = note.querySelector('.note-title').textContent.toLowerCase();
+        if (noteTitle.includes(searchValue)) {
+            note.style.display = ''; // Mostrar conteúdo
+        } else {
+            note.style.display = 'none'; // Ocultar conteúdo
+        }
+    });
+});
 
 // Salva no LocalStorage
 function updateLocalStorage() {
