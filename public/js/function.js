@@ -17,12 +17,29 @@ function createNoteElement(item) {
         </div>
     `;
 
-    const noteName = noteItem.querySelector('.note-name'); 
-    noteName.addEventListener('input', function () { 
-        if (noteName.textContent.length > 19) { 
-            noteName.textContent = noteName.textContent.substring(0, 19); 
-        } 
+    const noteName = noteItem.querySelector('.note-name');
+    const maxLength = 43;
+    const messageContainer = document.createElement('div'); // Cria um container para a mensagem
+    messageContainer.classList.add('error-message'); // Adiciona uma classe para estilizar a mensagem
+    
+    noteItem.appendChild(messageContainer);
+    
+    noteName.addEventListener('input', function () {
+        if (noteName.textContent.length >= maxLength) {
+            noteName.textContent = noteName.textContent.substring(0, maxLength);
+            
+            messageContainer.textContent = 'Limite de caracteres atingido!';
+            
+             // Recarrega a página após a limitação
+        location.reload();
+            noteName.setAttribute('contenteditable', 'false');
+        } else {
+            messageContainer.textContent = '';
+            
+            noteName.setAttribute('contenteditable', 'true');
+        }
     });
+    
 
     const noteNameElement = noteItem.querySelector('.note-name');
     noteNameElement.addEventListener('input', () => {
@@ -47,14 +64,6 @@ function createNoteContent(item) {
         </div>
     `;
 
-    const noteTitleElement = noteContainer.querySelector('.note-title');
-    noteTitleElement.addEventListener('input', () => {
-        // Atualiza o título editável no elemento da nota quando o conteúdo mudar
-        const noteNameElement = document.querySelector('.note-name');
-        noteNameElement.innerText = noteTitleElement.innerText;
-        item.name = noteTitleElement.innerText;
-        updateLocalStorage();
-    });
 
     const noteContentElement = noteContainer.querySelector('textarea');
     noteContentElement.addEventListener('input', () => {

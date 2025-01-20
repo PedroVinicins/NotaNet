@@ -6,15 +6,15 @@
 
 body {
   color: white;
-  height: 100%;  
-  position: fixed; 
-  top: 0; 
-  left: 0; 
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   background-color: #1C1C1E;
 }
 
-h4{
+h4 {
   position: relative;
   left: 776px;
   color: #EDBB08;
@@ -50,15 +50,19 @@ input {
 }
 
 .add-checkbox-line {
-  position: absolute; /* ou fixed, dependendo do caso */
+  position: absolute;
+  /* ou fixed, dependendo do caso */
   color: #EDBB08;
   cursor: pointer;
-  z-index: 9999; /* Certifique-se de que este valor seja maior que o dos outros elementos */
+  z-index: 9999;
+  /* Certifique-se de que este valor seja maior que o dos outros elementos */
 }
+
 #listnotas {
   display: flex;
   position: absolute;
   flex-direction: column;
+  align-items: center;
   width: 250px;
   min-height: auto;
   height: 85vb;
@@ -88,7 +92,7 @@ input {
 #listnotas::-webkit-scrollbar-thumb {
   background-color: #4A4A4D;
   /* Cor da barra */
-  
+
   /* Arredondamento */
 }
 
@@ -101,7 +105,8 @@ input {
 .notasSalvas {
   display: grid;
   height: 120px;
-  width: 35vh;
+  word-break: break-all;
+  width: 30vh;
   margin: 5px;
   border-radius: 12px;
   background-color: #454549dc;
@@ -118,15 +123,8 @@ i {
   border: none;
   margin-top: 10px;
   text-align: center;
+  font-weight: lighter;
   font-size: 22px;
-  background-color: transparent;
-}
-
-.note-nameF {
-  outline: none;
-  border: none;
-  margin-left: 12px;
-  font-size: 20px;
   background-color: transparent;
 }
 
@@ -136,7 +134,7 @@ i {
   margin-top: 5px;
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 15px;  
+  font-size: 15px;
   background-color: transparent;
 }
 
@@ -152,9 +150,9 @@ i {
   margin: 3px;
   background-color: #202023;
   border-right: solid 1px black;
- border-left: none;
- border-top: none;
- border-bottom: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
   cursor: pointer;
   outline: none;
   transition: color 0.3s;
@@ -183,7 +181,7 @@ i {
 
 /* Personalização da barra de rolagem */
 .main-notes::-webkit-scrollbar {
-width: 1px;
+  width: 1px;
   /* Largura da barra */
 }
 
@@ -204,7 +202,7 @@ width: 1px;
   /* Cor da barra ao passar o mouse */
 }
 
-.note-content{
+.note-content {
   min-width: 100vb;
   width: 100%;
   min-height: auto;
@@ -219,11 +217,9 @@ width: 1px;
 .note-title {
   outline: none;
   border: none;
-  min-width: 100vb;
-  width: 100%;
-  margin: 5px;
+  word-break: keep-all1;
+  width: 90%;
   border-bottom: solid 1px wheat;
-  text-align: center;
   font-size: 35px;
   background-color: transparent;
 }
@@ -252,4 +248,9 @@ textarea::-webkit-scrollbar {
 textarea::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: bisque;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
 }
