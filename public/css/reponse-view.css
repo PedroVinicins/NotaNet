@@ -1,0 +1,50 @@
+@media screen and (max-width: 768px) {
+  #listnotas {
+    display: none !important;
+  }
+
+  input {
+    display: block;
+    width: 95% !important;
+    float: left;
+    position: fixed;
+    font-weight: 900;
+    transition: .5s linear;
+    overflow: hidden;
+    text-align: center;
+    background: transparent;
+    text-transform: uppercase;
+    bottom: 20px !important;
+    right: 10px;
+    z-index: 1000;
+  }
+
+  .box {
+    width: 100px !important;
+    height: 53px !important;
+    top: 540px !important;
+  }
+
+  .items {
+    width: 100% !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-notes {
+    width: 100% !important;
+  }
+
+  .note-content {
+    width: 100% !important;
+  }
+
+  .note-title {
+    font-size: 25px !important;
+  }
+
+  textarea {
+    width: 100% !important;
+    float: right !important;
+  }
+}
