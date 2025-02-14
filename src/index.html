@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotaNet.</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="/src/css/home.css">
+    <script type="module" src="js/config.js" defer></script>
+    <script type="module" src="js/Fonte.js" defer></script>
+</head>
+<body>
+    <header class="nav-bar">
+        <h2>Nota<a href="/public/NotaNet.html">Net.</a></h2>
+        <input type="search" class="input" name="Notas" id="searchNotas" placeholder="Search all Notes">
+    </header>
+
+    <main>
+        <button id="btnNotes">
+            <span class="box">
+                <i class='bx bx-folder-plus'></i>
+                <p>New Nota</p>
+            </span>
+        </button>
+
+        <div class="items">
+            <span class="apagaTudo"><i class='bx bx-trash'></i></span>
+            <button id="btnSaveToFirebase">
+                <i class='bx bx-cloud-upload'></i>
+            </button>
+            <a href="/public/Ops.html"><i class='bx bxs-share-alt'></i></a>
+            <a href="/public/Ops.html"><i class='bx bxs-lock'></i></a>
+        </div>
+
+        <section class="notes">
+            <div id="listnotas"></div>
+            <div class="main-notes">
+                <div id="notes-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Adicione o conteúdo do footer aqui, se necessário -->
+    </footer>
+</body>
+</html>

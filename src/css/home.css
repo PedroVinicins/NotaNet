@@ -81,6 +81,14 @@ html {
   font-size: 30px;
 }	
 
+.bx-cloud-upload {
+  text-decoration: none;
+  color: #D1A409;
+  display: flex;
+  position: relative;
+  font-size: 30px;
+}	
+
 .items a:hover {
   cursor: pointer;
   background-color: #555;
