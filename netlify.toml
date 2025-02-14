@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "/public/Manutencao.html"
+to = "/src/index.html"
 status = 200
