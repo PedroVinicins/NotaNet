@@ -1,4 +1,4 @@
 [[redirects]]
 from = "/*"
-to = "/src/index.html"
+to = "/src/Netlify.html"
 status = 200
