@@ -1,17 +1,20 @@
-import { database } from './config.js'; // Certifique-se de que o Firebase está configurado corretamente
+import { database } from './config.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
+// Seletores de elementos
 const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
 const notas = document.getElementById('notes-container');
 const apagaTudoBtn = document.querySelector('.apagaTudo');
-const btnSaveToFirebase = document.getElementById('btnSaveToFirebase'); // Novo botão
+const btnSaveToFirebase = document.getElementById('btnSaveToFirebase');
+const searchNotas = document.getElementById('searchNotas');
 
+// Dados salvos no localStorage
 let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
 let currentIndex = 0;
 
-// Função para criar uma nota na lista lateral
-function createNoteElement(item) {
+// Função para criar um elemento de nota na lista lateral
+function createNoteElement(item, index) {
     const noteItem = document.createElement('div');
     noteItem.classList.add('suasNotasSalvas');
     noteItem.innerHTML = `
@@ -25,33 +28,29 @@ function createNoteElement(item) {
     const maxLength = 43;
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('error-message');
-    
     noteItem.appendChild(messageContainer);
-    
-    noteName.addEventListener('input', function () {
+
+    // Limita o número de caracteres no nome da nota
+    noteName.addEventListener('input', () => {
         if (noteName.textContent.length >= maxLength) {
             noteName.textContent = noteName.textContent.substring(0, maxLength);
             messageContainer.textContent = 'Limite de caracteres atingido!';
-            location.reload();
             noteName.setAttribute('contenteditable', 'false');
         } else {
             messageContainer.textContent = '';
             noteName.setAttribute('contenteditable', 'true');
         }
-    });
-
-    const noteNameElement = noteItem.querySelector('.note-name');
-    noteNameElement.addEventListener('input', () => {
-        const noteContentElement = document.querySelector('.note-title');
-        noteContentElement.innerText = noteNameElement.innerText;
-        item.name = noteNameElement.innerText;
+        item.name = noteName.textContent;
         updateLocalStorage();
     });
+
+    // Atualiza o conteúdo da nota ao clicar
+    noteItem.addEventListener('click', () => handleNoteClick(index));
 
     return noteItem;
 }
 
-// Função para criar uma nota com conteúdo editável
+// Função para criar o conteúdo editável da nota
 function createNoteContent(item) {
     const noteContainer = document.createElement('div');
     noteContainer.classList.add('container');
@@ -71,37 +70,73 @@ function createNoteContent(item) {
     return noteContainer;
 }
 
-// Pesquisa de notas
-document.getElementById('searchNotas').addEventListener('input', function() {
-    const searchValue = this.value.toLowerCase();
+// Função para pesquisar notas
+function handleSearch() {
+    const searchValue = searchNotas.value.toLowerCase();
     const noteItems = document.querySelectorAll('.suasNotasSalvas');
     const noteContents = document.querySelectorAll('.note-content');
-    
-    noteItems.forEach(function(note) {
+
+    noteItems.forEach((note, index) => {
         const noteName = note.querySelector('.note-name').textContent.toLowerCase();
         if (noteName.includes(searchValue)) {
             note.style.display = '';
+            noteContents[index].style.display = '';
         } else {
             note.style.display = 'none';
+            noteContents[index].style.display = 'none';
         }
     });
+}
 
-    noteContents.forEach(function(note) {
-        const noteTitle = note.querySelector('.note-title').textContent.toLowerCase();
-        if (noteTitle.includes(searchValue)) {
-            note.style.display = '';
-        } else {
-            note.style.display = 'none';
-        }
-    });
-});
-
-// Salva no LocalStorage
+// Função para atualizar o localStorage
 function updateLocalStorage() {
     localStorage.setItem('notasData', JSON.stringify(savedData));
 }
 
-// Função para descer uma nota
+// Função para gerar PDF da nota
+function gerarPDF() {
+    const notasData = localStorage.getItem('notasData');
+
+    // Verifica se há notas no localStorage
+    if (!notasData) {
+        alert('Nenhuma nota encontrada no localStorage!');
+        return;
+    }
+
+    // Converte a string JSON para um array de objetos
+    const notas = JSON.parse(notasData);
+
+    // Cria um novo documento PDF
+    const doc = new window.jspdf.jsPDF();
+
+    // Adiciona um título ao PDF
+    doc.setFontSize(18);
+    doc.text('Suas Notas', 10, 10);
+
+    // Adiciona o conteúdo das notas ao PDF
+    let yPos = 20; // Posição vertical inicial para o conteúdo
+    doc.setFontSize(12);
+
+    notas.forEach((nota, index) => {
+        doc.text(`Nota ${index + 1}: ${nota.name}`, 10, yPos);
+        yPos += 10;
+        doc.text(`Data: ${nota.date}`, 10, yPos);
+        yPos += 10;
+        doc.text(`Conteúdo: ${nota.content}`, 10, yPos);
+        yPos += 20; // Espaço entre as notas
+    });
+
+    // Salva o PDF com um nome específico
+    doc.save('Suas_Notas.pdf');
+}
+
+// Seleciona o botão "Gerar PDF"
+const btnGerarPDF = document.getElementById('btnGerarPDF');
+
+// Adiciona um evento de clique ao botão
+btnGerarPDF.addEventListener('click', gerarPDF);
+
+// Função para rolar para a próxima nota
 function descerScroll() {
     const sections = document.querySelectorAll('.note-content');
     if (currentIndex < sections.length - 1) {
@@ -112,7 +147,7 @@ function descerScroll() {
     }
 }
 
-// Atualiza o índice ao clicar em uma nota lateral
+// Função para lidar com o clique em uma nota lateral
 function handleNoteClick(index) {
     const sections = document.querySelectorAll('.note-content');
     if (index >= 0 && index < sections.length) {
@@ -121,26 +156,27 @@ function handleNoteClick(index) {
     }
 }
 
-// Renderiza os dados e adiciona eventos aos itens da lista lateral
+// Função para renderizar as notas na tela
 function renderData() {
     listnotas.innerHTML = "";
     notas.innerHTML = "";
 
     savedData.forEach((item, index) => {
-        const noteItem = createNoteElement(item);
+        const noteItem = createNoteElement(item, index);
         listnotas.appendChild(noteItem);
 
         const noteContent = createNoteContent(item);
         notas.appendChild(noteContent);
-
-        noteItem.addEventListener('click', () => handleNoteClick(index));
     });
 
     currentIndex = 0;
 }
 
+// Função para adicionar uma nova nota
 function addNewNote() {
     const noteName = prompt("Digite o nome da sua nova nota:", "Nova Nota");
+    if (noteName === null) return; 
+
     const newNote = {
         name: noteName || "Nova Nota",
         date: new Date().toLocaleDateString(),
@@ -152,43 +188,40 @@ function addNewNote() {
     renderData();
 }
 
-btnNotes.addEventListener('click', () => {
-    addNewNote();
-});
-
-// Evento: Apagar tudo
-apagaTudoBtn.addEventListener('click', () => {
+// Função para apagar todas as notas
+function apagarTudo() {
     const confirmDelete = confirm("Tem certeza de que deseja apagar tudo?");
     if (confirmDelete) {
         savedData = [];
         updateLocalStorage();
         renderData();
     }
-});
-
-// Função para salvar no Firebase
-function saveToFirebase() {
-    const notesRef = ref(database, 'Notas'); // Referência para o nó 'Notas' no Firebase
-
-    savedData.forEach((note) => {
-        push(notesRef, {
-            name: note.name,
-            content: note.content,
-            date: note.date
-        }).then(() => {
-            console.log('Nota salva no Firebase com sucesso!');
-        }).catch((error) => {
-            console.error('Erro ao salvar no Firebase:', error);
-        });
-    });
-
-    alert('Notas salvas no Firebase com sucesso!');
 }
 
-// Evento: Salvar no Firebase
-btnSaveToFirebase.addEventListener('click', () => {
-    saveToFirebase();
-});
+// Função para salvar notas no Firebase
+async function saveToFirebase() {
+    const notesRef = ref(database, 'Notas');
 
-// Carrega os dados ao iniciar
+    try {
+        for (const note of savedData) {
+            await push(notesRef, {
+                name: note.name,
+                content: note.content,
+                date: note.date
+            });
+        }
+        alert('Notas salvas no Firebase com sucesso!');
+    } catch (error) {
+        console.error('Erro ao salvar no Firebase:', error);
+        alert('Erro ao salvar no Firebase. Verifique o console para mais detalhes.');
+    }
+}
+
+// Event Listeners
+btnNotes.addEventListener('click', addNewNote);
+apagaTudoBtn.addEventListener('click', apagarTudo);
+btnSaveToFirebase.addEventListener('click', saveToFirebase);
+searchNotas.addEventListener('input', handleSearch);
+
+// Inicialização
 renderData();

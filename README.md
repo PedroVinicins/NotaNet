@@ -30,10 +30,7 @@ Se você tiver alguma dúvida, sugestão ou precisar de ajuda, entre em contato 
 
 - **Email:** [pedrnxvini@gmail.com](mailto:pedrnxvini@gmail.com)
 - **GitHub:** [PedroVinicins](https://github.com/PedroVinicins)
-- **Feed de Atualizações:** [Acompanhe as últimas atualizações aqui](https://www.feed.com/seu-feed)
-
-## Contribuições
-Se você gostaria de contribuir com o projeto ou sugerir melhorias, sinta-se à vontade para enviar um pull request no nosso repositório do GitHub. Suas contribuições são sempre bem-vindas!
+- **Feed de Atualizações:** [Acompanhe as últimas atualizações aqui](https://notanet-34cad.web.app/Atualiza%C3%A7oes.html)
 
 ## Licença
 Este projeto é de código aberto e está licenciado sob a Licença MIT. Para mais informações, consulte o arquivo LICENSE no repositório GitHub.

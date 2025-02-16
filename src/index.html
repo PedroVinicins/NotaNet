@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotaNet.</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+    <script  type="module" src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" media="(max-width: 600px)" href="css/reponse-view.css" />
     <script type="module" src="js/config.js" defer></script>
@@ -17,20 +18,26 @@
     </header>
 
     <main>
-        <button id="btnNotes">
-            <span class="box">
-                <i class='bx bx-folder-plus'></i>
-                <p>New Nota</p>
-            </span>
-        </button>
-
+        
         <div class="items">
-            <span class="apagaTudo"><i class='bx bx-trash'></i></span>
-            <button id="btnSaveToFirebase">
-                <i class='bx bx-cloud-upload'></i>
+            <button id="btnNotes">
+                <span class="box">
+                    <i class='bx bx-folder-plus'></i>
+                    <p>New Nota</p>
+                </span>
             </button>
-            <a href="/Ops.html"><i class='bx bxs-share-alt'></i></a>
-            <a href="/Ops.html"><i class='bx bxs-lock'></i></a>
+            <nav class="nav">
+                <span class="apagaTudo"><i class='bx bx-trash'></i></span>
+                <button id="btnSaveToFirebase">
+                    <i class='bx bx-cloud-upload'></i>
+                </button>
+
+                <button id="btnGerarPDF">
+                    <i class='bx bxs-share-alt'></i>
+                </button>
+                
+                <a href="/Ops.html"><i class='bx bxs-lock'></i></a>
+            </nav>
         </div>
 
         <section class="notes">
