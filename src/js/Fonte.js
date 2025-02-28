@@ -200,7 +200,7 @@ function apagarTudo() {
 
 // Função para salvar notas no Firebase
 async function saveToFirebase() {
-    const notesRef = ref(database, 'Notas');
+    const notesRef = ref(database, 'usuario-1');
 
     try {
         for (const note of savedData) {
