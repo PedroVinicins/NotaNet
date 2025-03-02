@@ -1,5 +1,5 @@
-import { database } from './config.js';
-import { ref, push } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+import { auth, db } from './config.js';
+import { collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
@@ -45,49 +45,7 @@ function createNoteElement(item, index) {
     // Atualiza o conteúdo da nota ao clicar
     noteItem.addEventListener('click', () => handleNoteClick(index));
     return noteItem;
-}
 
-// Função para criar o conteúdo editável da nota
-function createNoteContent(item) {
-    const noteContainer = document.createElement('div');
-    noteContainer.classList.add('container');
-    noteContainer.innerHTML = `
-        <div class="note-content">
-            <h2 contenteditable="true" class="note-title">${item.name}</h2>
-            <textarea placeholder="Escreva sua nota aqui...">${item.content || ''}</textarea>
-        </div>
-    `;
-
-    const noteContentElement = noteContainer.querySelector('textarea');
-    noteContentElement.addEventListener('input', () => {
-        item.content = noteContentElement.value;
-        updateLocalStorage();
-    });
-
-    return noteContainer;
-}
-
-// Função para pesquisar notas
-function handleSearch() {
-    const searchValue = searchNotas.value.toLowerCase();
-    const noteItems = document.querySelectorAll('.suasNotasSalvas');
-    const noteContents = document.querySelectorAll('.note-content');
-
-    noteItems.forEach((note, index) => {
-        const noteName = note.querySelector('.note-name').textContent.toLowerCase();
-        if (noteName.includes(searchValue)) {
-            note.style.display = '';
-            noteContents[index].style.display = '';
-        } else {
-            note.style.display = 'none';
-            noteContents[index].style.display = 'none';
-        }
-    });
-}
-
-// Função para atualizar o localStorage
-function updateLocalStorage() {
-    localStorage.setItem('notasData', JSON.stringify(savedData));
 }
 
 // Função para gerar PDF da nota
@@ -133,16 +91,6 @@ const btnGerarPDF = document.getElementById('btnGerarPDF');
 // Adiciona um evento de clique ao botão
 btnGerarPDF.addEventListener('click', gerarPDF);
 
-// Função para rolar para a próxima nota
-function descerScroll() {
-    const sections = document.querySelectorAll('.note-content');
-    if (currentIndex < sections.length - 1) {
-        currentIndex++;
-        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
-    } else {
-        alert("Você já está na última nota!");
-    }
-}
 
 // Função para lidar com o clique em uma nota lateral
 function handleNoteClick(index) {
@@ -153,26 +101,63 @@ function handleNoteClick(index) {
     }
 }
 
-// Função para renderizar as notas na tela
-function renderData() {
-    listnotas.innerHTML = "";
-    notas.innerHTML = "";
+function descerScroll() {
+    const sections = document.querySelectorAll('.note-content');
+    if (currentIndex < sections.length - 1) {
+        currentIndex++;
+        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
+    } else {
+        alert("Você já está na última nota!");
+    }
+}
 
-    savedData.forEach((item, index) => {
-        const noteItem = createNoteElement(item, index);
-        listnotas.appendChild(noteItem);
+// Função para criar o conteúdo editável da nota
+function createNoteContent(item) {
+    const noteContainer = document.createElement('div');
+    noteContainer.classList.add('container');
+    noteContainer.innerHTML = `
+        <div class="note-content">
+            <h2 contenteditable="true" class="note-title">${item.name}</h2>
+            <textarea placeholder="Escreva sua nota aqui...">${item.content || ''}</textarea>
+        </div>
+    `;
 
-        const noteContent = createNoteContent(item);
-        notas.appendChild(noteContent);
+    const noteContentElement = noteContainer.querySelector('textarea');
+    noteContentElement.addEventListener('input', () => {
+        item.content = noteContentElement.value;
+        updateLocalStorage();
     });
 
-    currentIndex = 0;
+    return noteContainer;
+}
+
+// Função para pesquisar notas
+function handleSearch() {
+    const searchValue = searchNotas.value.toLowerCase();
+    const noteItems = document.querySelectorAll('.suasNotasSalvas');
+    const noteContents = document.querySelectorAll('.note-content');
+
+    noteItems.forEach((note, index) => {
+        const noteName = note.querySelector('.note-name').textContent.toLowerCase();
+        if (noteName.includes(searchValue)) {
+            note.style.display = '';
+            noteContents[index].style.display = '';
+        } else {
+            note.style.display = 'none';
+            noteContents[index].style.display = 'none';
+        }
+    });
+}   
+
+// Função para atualizar o localStorage
+function updateLocalStorage() {
+    localStorage.setItem('notasData', JSON.stringify(savedData));
 }
 
 // Função para adicionar uma nova nota
 function addNewNote() {
     const noteName = prompt("Digite o nome da sua nova nota:", "Nova Nota");
-    if (noteName === null) return; 
+    if (noteName === null) return;
 
     const newNote = {
         name: noteName || "Nova Nota",
@@ -195,13 +180,21 @@ function apagarTudo() {
     }
 }
 
-//  salvar notas no Firebase
+// Função para salvar notas no Firestore
 async function saveToFirebase() {
-    const notesRef = ref(database, 'notas');
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert('Usuário não autenticado. Faça login para salvar notas.');
+        return;
+    }
+
+    const userId = user.uid;
+    const notasRef = collection(db, 'users', userId, 'notas');
 
     try {
         for (const note of savedData) {
-            await push(notesRef, {
+            await addDoc(notasRef, {
                 name: note.name,
                 content: note.content,
                 date: note.date
@@ -212,13 +205,61 @@ async function saveToFirebase() {
         console.error('Erro ao salvar no Firebase:', error);
         alert('Erro ao salvar no Firebase. Verifique o console para mais detalhes.');
     }
-}   
+}
+
+// Função para carregar notas do Firestore
+async function loadFromFirebase() {
+    const user = auth.currentUser;
+
+    if (!user) {
+        alert('Usuário não autenticado. Faça login para carregar notas.');
+        return;
+    }
+
+    const userId = user.uid;
+    const notasRef = collection(db, 'users', userId, 'notas');
+    const q = query(notasRef);
+
+    try {
+        const querySnapshot = await getDocs(q);
+        savedData = [];
+        querySnapshot.forEach((doc) => {
+            savedData.push(doc.data());
+        });
+        renderData();
+    } catch (error) {
+        console.error('Erro ao carregar notas:', error);
+        alert('Erro ao carregar notas. Verifique o console para mais detalhes.');
+    }
+}
+
+function renderData() {
+    listnotas.innerHTML = "";
+    notas.innerHTML = "";
+
+    savedData.forEach((item, index) => {
+        const noteItem = createNoteElement(item, index);
+        listnotas.appendChild(noteItem);
+
+        const noteContent = createNoteContent(item);
+        notas.appendChild(noteContent);
+    });
+
+    currentIndex = 0;
+}
+
+function logout() {
+    localStorage.removeItem('user');
+    window.location.href = 'auth.html'; // Redireciona para a página de autenticação
+}
 
 // Event Listeners
 btnNotes.addEventListener('click', addNewNote);
+btnLogout.addEventListener('click', logout);
 apagaTudoBtn.addEventListener('click', apagarTudo);
 btnSaveToFirebase.addEventListener('click', saveToFirebase);
 searchNotas.addEventListener('input', handleSearch);
 
 // Inicialização
+loadFromFirebase();
 renderData();
