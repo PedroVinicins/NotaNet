@@ -1,7 +1,6 @@
 import { database } from './config.js';
 import { ref, push } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
-// Seletores de elementos
 const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
 const notas = document.getElementById('notes-container');
@@ -9,7 +8,6 @@ const apagaTudoBtn = document.querySelector('.apagaTudo');
 const btnSaveToFirebase = document.getElementById('btnSaveToFirebase');
 const searchNotas = document.getElementById('searchNotas');
 
-// Dados salvos no localStorage
 let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
 let currentIndex = 0;
 
@@ -46,7 +44,6 @@ function createNoteElement(item, index) {
 
     // Atualiza o conteúdo da nota ao clicar
     noteItem.addEventListener('click', () => handleNoteClick(index));
-
     return noteItem;
 }
 
@@ -198,9 +195,9 @@ function apagarTudo() {
     }
 }
 
-// Função para salvar notas no Firebase
+//  salvar notas no Firebase
 async function saveToFirebase() {
-    const notesRef = ref(database, 'usuario-1');
+    const notesRef = ref(database, 'notas');
 
     try {
         for (const note of savedData) {
@@ -215,7 +212,7 @@ async function saveToFirebase() {
         console.error('Erro ao salvar no Firebase:', error);
         alert('Erro ao salvar no Firebase. Verifique o console para mais detalhes.');
     }
-}
+}   
 
 // Event Listeners
 btnNotes.addEventListener('click', addNewNote);

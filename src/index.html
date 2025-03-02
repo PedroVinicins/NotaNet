@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NotaNet.</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
     <script  type="module" src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" media="(max-width: 600px)" href="css/reponse-view.css" />
     <script type="module" src="js/config.js" defer></script>
-    <script type="module" src="js/Fonte.js" defer></script>
+    <script type="module" src="js/app.js" defer></script>
 </head>
 <body>
     <header class="nav-bar">
@@ -22,8 +23,8 @@
         <div class="items">
             <button id="btnNotes">
                 <span class="box">
-                    <i class='bx bx-folder-plus'></i>
                     <p>New Nota</p>
+                    <i class='bx bx-add-to-queue'></i>
                 </span>
             </button>
             <nav class="nav">
@@ -33,10 +34,8 @@
                 </button>
 
                 <button id="btnGerarPDF">
-                    <i class='bx bxs-cloud-download'></i>
+                    <i class="ri-file-pdf-2-line"></i>
                 </button>
-                
-                <a href="/Ops.html"><i class='bx bxs-lock'></i></a>
             </nav>
         </div>
 

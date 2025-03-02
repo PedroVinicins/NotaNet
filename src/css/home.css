@@ -133,7 +133,8 @@ html {
 /* buntton */
 .box {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   position: relative;
   width: 218px;
   height: 40px;
@@ -144,8 +145,8 @@ html {
   position: relative;
   overflow: hidden;
   background: transparent;
-  text-transform: uppercase;
   font-weight: 900;
+  text-transform: uppercase;
   z-index: 1000;
 }
 
