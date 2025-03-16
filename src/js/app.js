@@ -1,14 +1,12 @@
-import { auth, db } from './config.js';
-import { collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { auth } from './config.js';
 
 const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
 const notas = document.getElementById('notes-container');
 const apagaTudoBtn = document.querySelector('.apagaTudo');
-const btnSaveToFirebase = document.getElementById('btnSaveToFirebase');
 const searchNotas = document.getElementById('searchNotas');
 
-let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
+let savedData = [];
 let currentIndex = 0;
 
 // Função para criar um elemento de nota na lista lateral
@@ -45,12 +43,17 @@ function createNoteElement(item, index) {
     // Atualiza o conteúdo da nota ao clicar
     noteItem.addEventListener('click', () => handleNoteClick(index));
     return noteItem;
-
 }
 
 // Função para gerar PDF da nota
 function gerarPDF() {
-    const notasData = localStorage.getItem('notasData');
+    const user = auth.currentUser;
+    if (!user) {
+        alert('Usuário não autenticado. Faça login para gerar PDF.');
+        return;
+    }
+
+    const notasData = localStorage.getItem(`notasData_${user.uid}`);
 
     // Verifica se há notas no localStorage
     if (!notasData) {
@@ -90,7 +93,6 @@ const btnGerarPDF = document.getElementById('btnGerarPDF');
 
 // Adiciona um evento de clique ao botão
 btnGerarPDF.addEventListener('click', gerarPDF);
-
 
 // Função para lidar com o clique em uma nota lateral
 function handleNoteClick(index) {
@@ -147,11 +149,14 @@ function handleSearch() {
             noteContents[index].style.display = 'none';
         }
     });
-}   
+}
 
-// Função para atualizar o localStorage
+// Função para atualizar o localStorage com base no ID do usuário
 function updateLocalStorage() {
-    localStorage.setItem('notasData', JSON.stringify(savedData));
+    const user = auth.currentUser;
+    if (user) {
+        localStorage.setItem(`notasData_${user.uid}`, JSON.stringify(savedData));
+    }
 }
 
 // Função para adicionar uma nova nota
@@ -180,56 +185,13 @@ function apagarTudo() {
     }
 }
 
-// Função para salvar notas no Firestore
-async function saveToFirebase() {
+// Função para carregar notas do localStorage com base no ID do usuário
+function loadFromLocalStorage() {
     const user = auth.currentUser;
-
-    if (!user) {
-        alert('Usuário não autenticado. Faça login para salvar notas.');
-        return;
-    }
-
-    const userId = user.uid;
-    const notasRef = collection(db, 'users', userId, 'notas');
-
-    try {
-        for (const note of savedData) {
-            await addDoc(notasRef, {
-                name: note.name,
-                content: note.content,
-                date: note.date
-            });
-        }
-        alert('Notas salvas no Firebase com sucesso!');
-    } catch (error) {
-        console.error('Erro ao salvar no Firebase:', error);
-        alert('Erro ao salvar no Firebase. Verifique o console para mais detalhes.');
-    }
-}
-
-// Função para carregar notas do Firestore
-async function loadFromFirebase() {
-    const user = auth.currentUser;
-
-    if (!user) {
-        alert('Usuário não autenticado. Faça login para carregar notas.');
-        return;
-    }
-
-    const userId = user.uid;
-    const notasRef = collection(db, 'users', userId, 'notas');
-    const q = query(notasRef);
-
-    try {
-        const querySnapshot = await getDocs(q);
-        savedData = [];
-        querySnapshot.forEach((doc) => {
-            savedData.push(doc.data());
-        });
+    if (user) {
+        const notasData = localStorage.getItem(`notasData_${user.uid}`);
+        savedData = notasData ? JSON.parse(notasData) : [];
         renderData();
-    } catch (error) {
-        console.error('Erro ao carregar notas:', error);
-        alert('Erro ao carregar notas. Verifique o console para mais detalhes.');
     }
 }
 
@@ -257,9 +219,8 @@ function logout() {
 btnNotes.addEventListener('click', addNewNote);
 btnLogout.addEventListener('click', logout);
 apagaTudoBtn.addEventListener('click', apagarTudo);
-btnSaveToFirebase.addEventListener('click', saveToFirebase);
 searchNotas.addEventListener('input', handleSearch);
 
 // Inicialização
-loadFromFirebase();
+loadFromLocalStorage();
 renderData();
