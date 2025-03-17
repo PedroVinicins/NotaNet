@@ -1,12 +1,42 @@
-import { auth } from './config.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
+// Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBaz-T1o0EutMFxKWl8K8EbgWSV3A9U1aA",
+    authDomain: "notanet-34cad.firebaseapp.com",
+    databaseURL: "https://notanet-34cad-default-rtdb.firebaseio.com",
+    projectId: "notanet-34cad",
+    storageBucket: "notanet-34cad.firebasestorage.app",
+    messagingSenderId: "158464923311",
+    appId: "1:158464923311:web:431bee0f905d0a8334265a",
+    measurementId: "G-P4B2CH837M"
+};
+
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const database = getDatabase(app);
+
+// Elementos do DOM
 const btnNotes = document.getElementById('btnNotes');
 const listnotas = document.getElementById('listnotas');
 const notas = document.getElementById('notes-container');
 const apagaTudoBtn = document.querySelector('.apagaTudo');
+const btnSaveToFirebase = document.getElementById('btnSaveToFirebase');
 const searchNotas = document.getElementById('searchNotas');
+const btnGerarPDF = document.getElementById('btnGerarPDF');
+const btnLogout = document.getElementById('btnLogout');
 
-let savedData = [];
+// Dados salvos no localStorage
+let savedData = JSON.parse(localStorage.getItem('notasData')) || [];
 let currentIndex = 0;
 
 // Função para criar um elemento de nota na lista lateral
@@ -42,75 +72,8 @@ function createNoteElement(item, index) {
 
     // Atualiza o conteúdo da nota ao clicar
     noteItem.addEventListener('click', () => handleNoteClick(index));
+
     return noteItem;
-}
-
-// Função para gerar PDF da nota
-function gerarPDF() {
-    const user = auth.currentUser;
-    if (!user) {
-        alert('Usuário não autenticado. Faça login para gerar PDF.');
-        return;
-    }
-
-    const notasData = localStorage.getItem(`notasData_${user.uid}`);
-
-    // Verifica se há notas no localStorage
-    if (!notasData) {
-        alert('Nenhuma nota encontrada no localStorage!');
-        return;
-    }
-
-    // Converte a string JSON para um array de objetos
-    const notas = JSON.parse(notasData);
-
-    // Cria um novo documento PDF
-    const doc = new window.jspdf.jsPDF();
-
-    // Adiciona um título ao PDF
-    doc.setFontSize(18);
-    doc.text('Suas Notas', 10, 10);
-
-    // Adiciona o conteúdo das notas ao PDF
-    let yPos = 20; // Posição vertical inicial para o conteúdo
-    doc.setFontSize(12);
-
-    notas.forEach((nota, index) => {
-        doc.text(`Nota ${index + 1}: ${nota.name}`, 10, yPos);
-        yPos += 10;
-        doc.text(`Data: ${nota.date}`, 10, yPos);
-        yPos += 10;
-        doc.text(`Conteúdo: ${nota.content}`, 10, yPos);
-        yPos += 20; // Espaço entre as notas
-    });
-
-    // Salva o PDF com um nome específico
-    doc.save('Suas_Notas.pdf');
-}
-
-// Seleciona o botão "Gerar PDF"
-const btnGerarPDF = document.getElementById('btnGerarPDF');
-
-// Adiciona um evento de clique ao botão
-btnGerarPDF.addEventListener('click', gerarPDF);
-
-// Função para lidar com o clique em uma nota lateral
-function handleNoteClick(index) {
-    const sections = document.querySelectorAll('.note-content');
-    if (index >= 0 && index < sections.length) {
-        currentIndex = index;
-        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
-    }
-}
-
-function descerScroll() {
-    const sections = document.querySelectorAll('.note-content');
-    if (currentIndex < sections.length - 1) {
-        currentIndex++;
-        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
-    } else {
-        alert("Você já está na última nota!");
-    }
 }
 
 // Função para criar o conteúdo editável da nota
@@ -151,12 +114,82 @@ function handleSearch() {
     });
 }
 
-// Função para atualizar o localStorage com base no ID do usuário
+// Função para atualizar o localStorage
 function updateLocalStorage() {
-    const user = auth.currentUser;
-    if (user) {
-        localStorage.setItem(`notasData_${user.uid}`, JSON.stringify(savedData));
+    localStorage.setItem('notasData', JSON.stringify(savedData));
+}
+
+// Função para gerar PDF da nota
+function gerarPDF() {
+    const notasData = localStorage.getItem('notasData');
+
+    // Verifica se há notas no localStorage
+    if (!notasData) {
+        alert('Nenhuma nota encontrada no localStorage!');
+        return;
     }
+
+    // Converte a string JSON para um array de objetos
+    const notas = JSON.parse(notasData);
+
+    // Cria um novo documento PDF
+    const doc = new window.jspdf.jsPDF();
+
+    // Adiciona um título ao PDF
+    doc.setFontSize(18);
+    doc.text('Suas Notas', 10, 10);
+
+    // Adiciona o conteúdo das notas ao PDF
+    let yPos = 20; // Posição vertical inicial para o conteúdo
+    doc.setFontSize(12);
+
+    notas.forEach((nota, index) => {
+        doc.text(`Nota ${index + 1}: ${nota.name}`, 10, yPos);
+        yPos += 10;
+        doc.text(`Data: ${nota.date}`, 10, yPos);
+        yPos += 10;
+        doc.text(`Conteúdo: ${nota.content}`, 10, yPos);
+        yPos += 20; // Espaço entre as notas
+    });
+
+    // Salva o PDF com um nome específico
+    doc.save('Suas_Notas.pdf');
+}
+
+// Função para rolar para a próxima nota
+function descerScroll() {
+    const sections = document.querySelectorAll('.note-content');
+    if (currentIndex < sections.length - 1) {
+        currentIndex++;
+        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
+    } else {
+        alert("Você já está na última nota!");
+    }
+}
+
+// Função para lidar com o clique em uma nota lateral
+function handleNoteClick(index) {
+    const sections = document.querySelectorAll('.note-content');
+    if (index >= 0 && index < sections.length) {
+        currentIndex = index;
+        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
+    }
+}
+
+// Função para renderizar as notas na tela
+function renderData() {
+    listnotas.innerHTML = "";
+    notas.innerHTML = "";
+
+    savedData.forEach((item, index) => {
+        const noteItem = createNoteElement(item, index);
+        listnotas.appendChild(noteItem);
+
+        const noteContent = createNoteContent(item);
+        notas.appendChild(noteContent);
+    });
+
+    currentIndex = 0;
 }
 
 // Função para adicionar uma nova nota
@@ -185,42 +218,77 @@ function apagarTudo() {
     }
 }
 
-// Função para carregar notas do localStorage com base no ID do usuário
-function loadFromLocalStorage() {
+// Função para salvar notas no Firebase
+async function saveToFirebase() {
     const user = auth.currentUser;
-    if (user) {
-        const notasData = localStorage.getItem(`notasData_${user.uid}`);
-        savedData = notasData ? JSON.parse(notasData) : [];
-        renderData();
+    if (!user) {
+        alert('Você precisa estar logado para salvar notas no Firebase.');
+        return;
+    }
+
+    const notesRef = ref(database, `users/${user.uid}/notas`);
+    try {
+        savedData.forEach(async (note) => {
+            const newNoteRef = push(notesRef);
+            await set(newNoteRef, {
+                id: newNoteRef.key, // ID único gerado pelo Firebase
+                name: note.name,
+                content: note.content,
+                date: note.date
+            });
+        });
+        alert('Notas salvas no Firebase com sucesso!');
+    } catch (error) {
+        console.error('Erro ao salvar no Firebase:', error);
+        alert('Erro ao salvar no Firebase.');
     }
 }
 
-function renderData() {
-    listnotas.innerHTML = "";
-    notas.innerHTML = "";
+// Função para carregar notas do Firebase
+function loadFromFirebase() {
+    const user = auth.currentUser;
+    if (!user) return;
 
-    savedData.forEach((item, index) => {
-        const noteItem = createNoteElement(item, index);
-        listnotas.appendChild(noteItem);
-
-        const noteContent = createNoteContent(item);
-        notas.appendChild(noteContent);
+    const notesRef = ref(database, `users/${user.uid}/notas`);
+    onValue(notesRef, (snapshot) => {
+        if (snapshot.exists()) {
+            savedData = Object.values(snapshot.val());
+        } else {
+            savedData = [];
+        }
+        updateLocalStorage();
+        renderData();
     });
-
-    currentIndex = 0;
 }
 
-function logout() {
-    localStorage.removeItem('user');
-    window.location.href = 'auth.html'; // Redireciona para a página de autenticação
+// Função para logout
+function handleLogout() {
+    signOut(auth)
+        .then(() => {
+            alert('Logout realizado com sucesso!');
+            window.location.href = "auth.html"; // Redireciona para a página de login
+        })
+        .catch((error) => {
+            console.error('Erro ao fazer logout:', error);
+        });
 }
 
 // Event Listeners
 btnNotes.addEventListener('click', addNewNote);
-btnLogout.addEventListener('click', logout);
 apagaTudoBtn.addEventListener('click', apagarTudo);
+btnSaveToFirebase.addEventListener('click', saveToFirebase);
 searchNotas.addEventListener('input', handleSearch);
+btnGerarPDF.addEventListener('click', gerarPDF);
+btnLogout.addEventListener('click', handleLogout);
+
+// Verifica se o usuário está logado e carrega as notas
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        window.location.href = "auth.html";
+    } else {
+        loadFromFirebase();
+    }
+});
 
 // Inicialização
-loadFromLocalStorage();
 renderData();
