@@ -231,7 +231,7 @@ async function saveToFirebase() {
         savedData.forEach(async (note) => {
             const newNoteRef = push(notesRef);
             await set(newNoteRef, {
-                id: newNoteRef.key, // ID único gerado pelo Firebase
+                id: newNoteRef.key, 
                 name: note.name,
                 content: note.content,
                 date: note.date
@@ -266,7 +266,7 @@ function handleLogout() {
     signOut(auth)
         .then(() => {
             alert('Logout realizado com sucesso!');
-            window.location.href = "auth.html"; // Redireciona para a página de login
+            window.location.href = "index.html"; 
         })
         .catch((error) => {
             console.error('Erro ao fazer logout:', error);
@@ -284,11 +284,10 @@ btnLogout.addEventListener('click', handleLogout);
 // Verifica se o usuário está logado e carrega as notas
 onAuthStateChanged(auth, (user) => {
     if (!user) {
-        window.location.href = "auth.html";
+        window.location.href = "index.html";
     } else {
         loadFromFirebase();
     }
 });
 
-// Inicialização
 renderData();
