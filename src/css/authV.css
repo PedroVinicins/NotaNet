@@ -1,130 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    outline: none;
-    border: none;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #18181B;
-    position: fixed;
-}
-
-.blur {
-    position: absolute;
-    box-shadow: 0 0 1000px 50px #00ffae65;
-    z-index: -100;
-}
-
-.container {
     display: flex;
-    max-width: 1200px;
-    margin: auto;
-    padding: 5rem 2rem;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-content {
+.left{
+    position: relative;
+    width: 50%;
+    height: 100vh;
+    background-color: #D1A409;
     display: flex;
-    gap: 2rem;
+    justify-content: center;
+    align-items: center;
 }
 
-.content h4 {
-    margin-bottom: 1rem;
-    color: #ccc;
-    font-size: 1rem;
-    font-weight: 700;
+.left h1{
+    color: #333;
+    font-size: 10rem;
+    margin: 0;
+    font-weight: 900;
 }
 
-.content h1 {
+.right{
+    display: flex;
+    position: relative;
+    width: 50%;
+    height: 100vh;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-form{
+    display: flex;
+    border: solid 1px #fff;
     color: #fff;
-    margin-bottom: 1rem;
-    font-size: 3rem;
+    border-radius: 12px;
+    padding: 20px;
+    justify-content: center;
+    flex-direction: column; 
+}
+
+.login-form h4 ,h1, p ,label{
+    color: #fff;
+    margin-bottom: 5px 0;
     font-weight: 700;
-    line-height: 6rem;
 }
 
-.content p {
-    margin-bottom: 2rem;
-    color: #ccc;
-    margin: 12px;
-}
-
-.input {
-    border: 2px solid #e8e8e8;
-    padding: 15px;
-    width: 300px;
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
     border: none;
-    border-radius: 10px;
-    background-color: #212121;
-    color: white;
-    font-size: small;
-    font-weight: bold;
-    text-align: center;
-    transition: 0.8s;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
 }
 
-.btn {
-    border: 2px solid #e8e8e8;
-    color: white;
-    padding: 15px;
+.btn1{
+    width: 50%;
+    padding: 10px;
+    margin: 5px;
     border: none;
-    border-radius: 10px;
-    background-color: #212121;
-    font-size: small;
-    font-weight: bold;
-    text-align: center;
-    transition: 0.8s;
+    border-radius: 5px;
+    background-color: #D1A409;
+    color: #fff;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.btn:hover {
-    outline-color: white;
-    background-color: #006cf0;
-    color: #e8e8e8;
-    box-shadow: 5px 5px #888888;
-}
-
-.input:focus {
-    outline-color: white;
-    background-color: #212121;
-    color: #e8e8e8;
-    box-shadow: 5px 6px 40px #ffffff76;
-}
-
-.image::before{
-    content: "NNT";
-    position: absolute;
-    top: 10px;
-    left: 60%;
-    transform: translateX(-50%);
-    font-size: 50rem;
-    font-weight: 500;
-    line-height: 40rem;
-    color: #eeff00;
-    opacity: 0.2;
-    z-index: -100;
-    transition:  0.8s;
-}
-
-#loader {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+.btn2{
+    position: relative;
+    left: 150px;
+    width: 50%;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #D1A409;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
