@@ -50,6 +50,7 @@ body {
     width: 75%;
     justify-content: center;
     flex-direction: column; 
+    backdrop-filter: blur(15px)
 }
 
 .login-form h4 ,h1, p ,label{
@@ -97,4 +98,50 @@ input[type="password"] {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+
+/* Responsive Styles */
+
+@media (max-width: 780px){
+    body {
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    .left, .right {
+        width: 100%;
+        height: 30vh;
+    }
+
+    .left{
+        height: 80vh;
+    }
+
+    .left h1 {
+        font-size: 5rem;
+        margin: 0;
+        font-weight: 900;
+        text-shadow: 0 0 1px black;
+    }
+
+    .login-form {
+        display: flex;
+        width: 90%;
+        height: 320px;
+        transition: 0.5s ease;
+        margin: 0 auto;       
+        backdrop-filter: blur(15px);
+    }
+
+    .btn1, .btn2 {
+        width: 100%;
+        position: relative;
+        left: 0px;
+        margin: 5px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+
 }

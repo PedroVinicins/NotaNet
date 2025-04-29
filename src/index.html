@@ -1,95 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">  
     <link rel="stylesheet" href="css/authV.css">
+    <script type="module" src="js/auth.js" defer></script>
     <title>NotaNEt.</title>
 </head>
-<body>
-   <div class="left">
-    <h1>NOTA<br>NET.</h1>
-   </div>
 
-    <div class="right">
-   <div class="login-form">
-    <H1>Entre na sua conta</H1>
-    <p>Informe seus dados para entra na conta.</p>
-    <label for="email">Email</label>
-    <input type="email" id="login-email" placeholder="Email" class="input">
-    <label for="Senha">Senha</label>  
-    <input type="password" id="login-password" placeholder="Senha" class="input">
-    <button id="login-btn" class="btn1">Login</button>
-    <button id="register-btn" class="btn2">Cadastrar</button>
-    <p id="auth-status"></p>
-</div>
+<body>
+    <div class="left">
+        <h1>NOTA<br>NET.</h1>
     </div>
 
-        <!-- Firebase e scripts -->
-        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-            import {
-                getAuth,
-                signInWithEmailAndPassword,
-                createUserWithEmailAndPassword,
-            } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    <div class="right">
+        <div class="login-form">
+            <H1>Entre na sua conta</H1>
+            <p>Informe seus dados para entra na conta.</p>
+            <label for="email">Email</label>
+            <input type="email" id="login-email" placeholder="Email" class="input">
+            <label for="Senha">Senha</label>
+            <input type="password" id="login-password" placeholder="Senha" class="input">
+            <button id="login-btn" class="btn1">Login</button>
+            <button id="register-btn" class="btn2">Cadastrar</button>
+            <p id="auth-status"></p>
+        </div>
+    </div>    
 
-            // Configuração do Firebase
-            const firebaseConfig = {
-                apiKey: "AIzaSyBaz-T1o0EutMFxKWl8K8EbgWSV3A9U1aA",
-                authDomain: "notanet-34cad.firebaseapp.com",
-                databaseURL: "https://notanet-34cad-default-rtdb.firebaseio.com",
-                projectId: "notanet-34cad",
-                storageBucket: "notanet-34cad.firebasestorage.app",
-                messagingSenderId: "158464923311",
-                appId: "1:158464923311:web:431bee0f905d0a8334265a",
-                measurementId: "G-P4B2CH837M"
-            };
-
-            // Inicializa o Firebase
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-
-            // Elementos do DOM
-            const loginEmail = document.getElementById('login-email');
-            const loginPassword = document.getElementById('login-password');
-            const loginBtn = document.getElementById('login-btn');
-            const registerBtn = document.getElementById('register-btn');
-            const authStatus = document.getElementById('auth-status');
-
-            // Função para login
-            loginBtn.addEventListener('click', () => {
-                const email = loginEmail.value;
-                const password = loginPassword.value;
-
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        authStatus.textContent = `Logado como: ${userCredential.user.email}`;
-// rota de redirecionamento após login
-                        window.location.href = "NotaNet.html";
-                    })
-                    .catch((error) => {
-                        authStatus.textContent = `Erro ao logar: ${error.message}`;
-                    });
-            });
-
-            // Função para cadastro
-            registerBtn.addEventListener('click', () => {
-                const email = loginEmail.value;
-                const password = loginPassword.value;
-
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        authStatus.textContent = `Usuário cadastrado: ${userCredential.user.email}`;
-                    })
-                    .catch((error) => {
-                        authStatus.textContent = `Erro ao cadastrar: ${error.message}`;
-                    });
-            });
-        </script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 </body>
 
 </html>
