@@ -6,7 +6,7 @@ import {
     onAuthStateChanged,
     signOut,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { getDatabase, ref, push, onValue, set , remove} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -45,6 +45,7 @@ function createNoteElement(item, index) {
     noteItem.classList.add('suasNotasSalvas');
     noteItem.innerHTML = `
         <div class="notasSalvas">
+            <span class="apagarNota" data-index="${index}">X</span>
             <h1 contenteditable="true" class="note-name">${item.name}</h1>
             <p class="note-date">${item.date}</p>
         </div>
@@ -70,6 +71,12 @@ function createNoteElement(item, index) {
         updateLocalStorage();
     });
 
+    // Adiciona evento de clique para apagar nota
+    noteItem.querySelector('.apagarNota').addEventListener('click', (e) => {
+        e.stopPropagation();
+        apagarNotaFirebase(index);
+    });
+
     // Atualiza o conteúdo da nota ao clicar
     noteItem.addEventListener('click', () => handleNoteClick(index));
 
@@ -87,7 +94,21 @@ function createNoteContent(item) {
         </div>
     `;
 
+    const noteTitle = noteContainer.querySelector('.note-title');
     const noteContentElement = noteContainer.querySelector('textarea');
+    
+    // Atualiza o título da nota
+    noteTitle.addEventListener('input', () => {
+        item.name = noteTitle.textContent;
+        // Atualiza também o nome na lista lateral
+        const noteNameElements = document.querySelectorAll('.note-name');
+        if (noteNameElements[index]) {
+            noteNameElements[index].textContent = noteTitle.textContent;
+        }
+        updateLocalStorage();
+    });
+
+    // Atualiza o conteúdo da nota
     noteContentElement.addEventListener('input', () => {
         item.content = noteContentElement.value;
         updateLocalStorage();
@@ -106,10 +127,14 @@ function handleSearch() {
         const noteName = note.querySelector('.note-name').textContent.toLowerCase();
         if (noteName.includes(searchValue)) {
             note.style.display = '';
-            noteContents[index].style.display = '';
+            if (noteContents[index]) {
+                noteContents[index].style.display = '';
+            }
         } else {
             note.style.display = 'none';
-            noteContents[index].style.display = 'none';
+            if (noteContents[index]) {
+                noteContents[index].style.display = 'none';
+            }
         }
     });
 }
@@ -120,50 +145,54 @@ function updateLocalStorage() {
 }
 
 // Função para gerar PDF da nota
-function gerarPDF() {
-    const notasData = localStorage.getItem('notasData');
+async function gerarPDF() {
+    try {
+        // Carrega a biblioteca jsPDF dinamicamente
+        const { jsPDF } = await import('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+        
+        const notasData = JSON.parse(localStorage.getItem('notasData')) || [];
 
-    // Verifica se há notas no localStorage
-    if (!notasData) {
-        alert('Nenhuma nota encontrada no localStorage!');
-        return;
-    }
+        if (notasData.length === 0) {
+            alert('Nenhuma nota encontrada!');
+            return;
+        }
 
-    // Converte a string JSON para um array de objetos
-    const notas = JSON.parse(notasData);
+        // Cria um novo documento PDF
+        const doc = new jsPDF();
 
-    // Cria um novo documento PDF
-    const doc = new window.jspdf.jsPDF();
+        // Adiciona um título ao PDF
+        doc.setFontSize(18);
+        doc.text('Suas Notas', 10, 10);
 
-    // Adiciona um título ao PDF
-    doc.setFontSize(18);
-    doc.text('Suas Notas', 10, 10);
+        // Adiciona o conteúdo das notas ao PDF
+        let yPos = 20;
+        doc.setFontSize(12);
 
-    // Adiciona o conteúdo das notas ao PDF
-    let yPos = 20; // Posição vertical inicial para o conteúdo
-    doc.setFontSize(12);
+        notasData.forEach((nota, index) => {
+            // Quebra o texto em linhas para evitar overflow
+            const lines = doc.splitTextToSize(nota.content, 180);
+            
+            doc.text(`Nota ${index + 1}: ${nota.name}`, 10, yPos);
+            yPos += 7;
+            doc.text(`Data: ${nota.date}`, 10, yPos);
+            yPos += 7;
+            doc.text('Conteúdo:', 10, yPos);
+            yPos += 7;
+            doc.text(lines, 10, yPos);
+            yPos += (lines.length * 7) + 10; // Espaço entre as notas
+            
+            // Adiciona nova página se necessário
+            if (yPos > 280 && index < notasData.length - 1) {
+                doc.addPage();
+                yPos = 20;
+            }
+        });
 
-    notas.forEach((nota, index) => {
-        doc.text(`Nota ${index + 1}: ${nota.name}`, 10, yPos);
-        yPos += 10;
-        doc.text(`Data: ${nota.date}`, 10, yPos);
-        yPos += 10;
-        doc.text(`Conteúdo: ${nota.content}`, 10, yPos);
-        yPos += 20; // Espaço entre as notas
-    });
-
-    // Salva o PDF com um nome específico
-    doc.save('Suas_Notas.pdf');
-}
-
-// Função para rolar para a próxima nota
-function descerScroll() {
-    const sections = document.querySelectorAll('.note-content');
-    if (currentIndex < sections.length - 1) {
-        currentIndex++;
-        sections[currentIndex].scrollIntoView({ behavior: "smooth" });
-    } else {
-        alert("Você já está na última nota!");
+        // Salva o PDF
+        doc.save('Suas_Notas.pdf');
+    } catch (error) {
+        console.error('Erro ao gerar PDF:', error);
+        alert('Erro ao gerar PDF. Por favor, tente novamente.');
     }
 }
 
@@ -195,10 +224,11 @@ function renderData() {
 // Função para adicionar uma nova nota
 function addNewNote() {
     const noteName = prompt("Digite o nome da sua nova nota:", "Nova Nota");
-    if (noteName === null) return;
+    if (noteName === null || noteName.trim() === "") return;
 
     const newNote = {
-        name: noteName || "Nova Nota",
+        id: Date.now().toString(), // Adiciona um ID único
+        name: noteName.trim() || "Nova Nota",
         date: new Date().toLocaleDateString(),
         content: ''
     };
@@ -209,12 +239,59 @@ function addNewNote() {
 }
 
 // Função para apagar todas as notas
-function apagarTudo() {
-    const confirmDelete = confirm("Tem certeza de que deseja apagar tudo?");
+async function apagarTudo() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert('Você precisa estar logado para apagar as notas.');
+        return;
+    }
+
+    const confirmDelete = confirm("Tem certeza de que deseja apagar todas as notas? Esta ação não pode ser desfeita.");
     if (confirmDelete) {
-        savedData = [];
+        try {
+            // Apaga do Firebase
+            if (user) {
+                const notesRef = ref(database, `users/${user.uid}/notas`);
+                await remove(notesRef);
+            }
+            
+            // Apaga localmente
+            savedData = [];
+            updateLocalStorage();
+            renderData();
+            alert('Todas as notas foram apagadas com sucesso!');
+        } catch (error) {
+            console.error('Erro ao apagar as notas:', error);
+            alert('Ocorreu um erro ao apagar as notas. Por favor, tente novamente.');
+        }
+    }
+}
+
+// Função para apagar uma nota específica
+async function apagarNotaFirebase(index) {
+    const user = auth.currentUser;
+    const note = savedData[index];
+    
+    if (!note) return;
+
+    const confirmDelete = confirm(`Tem certeza de que deseja apagar a nota "${note.name}"?`);
+    if (!confirmDelete) return;
+
+    try {
+        // Apaga do Firebase se estiver logado
+        if (user && note.id) {
+            const noteRef = ref(database, `users/${user.uid}/notas/${note.id}`);
+            await remove(noteRef);
+        }
+        
+        // Apaga localmente
+        savedData.splice(index, 1);
         updateLocalStorage();
         renderData();
+        alert('Nota apagada com sucesso!');
+    } catch (error) {
+        console.error('Erro ao apagar a nota:', error);
+        alert('Ocorreu um erro ao apagar a nota. Por favor, tente novamente.');
     }
 }
 
@@ -226,21 +303,29 @@ async function saveToFirebase() {
         return;
     }
 
-    const notesRef = ref(database, `users/${user.uid}/notas`);
     try {
-        savedData.forEach(async (note) => {
+        const notesRef = ref(database, `users/${user.uid}/notas`);
+        
+        // Primeiro remove todas as notas existentes
+        await remove(notesRef);
+        
+        // Depois salva as novas notas
+        const promises = savedData.map(async (note) => {
             const newNoteRef = push(notesRef);
             await set(newNoteRef, {
-                id: newNoteRef.key, 
+                id: newNoteRef.key,
                 name: note.name,
                 content: note.content,
                 date: note.date
             });
+            return newNoteRef.key;
         });
+
+        await Promise.all(promises);
         alert('Notas salvas no Firebase com sucesso!');
     } catch (error) {
         console.error('Erro ao salvar no Firebase:', error);
-        alert('Erro ao salvar no Firebase.');
+        alert('Erro ao salvar no Firebase. Por favor, tente novamente.');
     }
 }
 
@@ -251,13 +336,20 @@ function loadFromFirebase() {
 
     const notesRef = ref(database, `users/${user.uid}/notas`);
     onValue(notesRef, (snapshot) => {
-        if (snapshot.exists()) {
-            savedData = Object.values(snapshot.val());
+        const firebaseData = snapshot.val();
+        if (firebaseData) {
+            // Converte o objeto do Firebase em array
+            savedData = Object.keys(firebaseData).map(key => ({
+                id: key,
+                ...firebaseData[key]
+            }));
         } else {
             savedData = [];
         }
         updateLocalStorage();
         renderData();
+    }, (error) => {
+        console.error('Erro ao carregar do Firebase:', error);
     });
 }
 
@@ -270,6 +362,7 @@ function handleLogout() {
         })
         .catch((error) => {
             console.error('Erro ao fazer logout:', error);
+            alert('Erro ao fazer logout. Por favor, tente novamente.');
         });
 }
 
@@ -290,4 +383,5 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+// Inicializa a aplicação
 renderData();
