@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção - NotaNet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.maintenance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.maintenance-content {
+    background-color: #333;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    background-color: #ff5722;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #e64a19;
+}
+
+@media (max-width: 768px) {
+    .maintenance-content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+</style>
+<body>
+    <div class="maintenance-container">
+        <div class="maintenance-content">
+            <h1>NotaNet mudou de domínio!</h1>
+            <p>Informamos que o <strong>NotaNet</strong> encerrou o contrato com o Netlify, e agora nosso novo domínio está hospedado no Firebase. O site pode ser acessado através do novo endereço:</p>
+            <p><a href="https://notanet-34cad.web.app/" target="_blank" style="color: #ff5722; font-weight: bold;">https://notanet-34cad.web.app/</a></p>
+            <p>Pedimos desculpas por qualquer transtorno e agradecemos pela compreensão. Continuamos trabalhando para melhorar a sua experiência.</p>
+            <div class="links">
+                <a href="https://github.com/PedroVinicins" target="_blank" class="btn">Visite nosso GitHub</a>
+                <a href="/src/Atualizaçoes.html" target="_blank" class="btn">Acompanhe as Atualizações</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

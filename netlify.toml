@@ -1,0 +1,4 @@
+[[redirects]]
+from = "/*"
+to = "/public/Netlify.html"
+status = 200

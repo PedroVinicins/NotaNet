@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotaNet.</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+    <script type="module" src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" media="(max-width: 600px)" href="css/reponse-view.css" />
+    <script type="module" src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="nav-bar">
+        <h2>NotaNet.</h2>
+        <input type="search" class="input" name="Notas" id="searchNotas" placeholder="Search all Notes">
+    </header>
+    
+    <main>
+        <div class="items">
+            <button id="btnNotes">
+                <span class="box">
+                    <p>New Nota</p>
+                    <i class='bx bx-add-to-queue'></i>
+                </span>
+            </button>
+            <nav class="nav">
+                <span class="apagaTudo"><i class='bx bx-trash'></i></span>
+                <button id="btnSaveToFirebase">
+                    <i class='bx bx-cloud-upload'></i>
+                </button>
+                <button id="btnGerarPDF">
+                    <i class="ri-file-pdf-2-line"></i>
+                </button>
+                <button id="btnLogout"><i class="ri-logout-box-line"></i></button>
+            </nav>
+        </div>
+
+        <section class="notes">
+            <div id="listnotas"></div>
+            <div class="main-notes">
+                <div id="notes-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Developed by <a href="https://github.com/PedroVinicins">Pedroca</a></p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+</body>
+</html>
