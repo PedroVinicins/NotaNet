@@ -2,4 +2,14 @@
 node_modules/
 .env
 .firebase/
+public/
+
 # Build output
+
+.firebase.json
+
+
+.netlify.toml
+.firestore.rules
+.firestore.indexes.json
+.firebasrc
